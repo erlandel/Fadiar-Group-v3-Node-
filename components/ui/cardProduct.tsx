@@ -190,7 +190,7 @@ export default function CardProduct({
                 >
                   −
                 </button>
-                <span className="py-1 border-x border-gray-300 w-10 sm:w-10 2xl:w-12 text-center flex-shrink-0">
+                <span className="py-1 border-x border-gray-300 w-10 sm:w-10 2xl:w-12 text-center shrink-0">
                   {quantity}
                 </span>
                 <button
@@ -309,7 +309,7 @@ export default function CardProduct({
                 >
                   −
                 </button>
-                <span className="py-1 border-x border-gray-300 w-8 sm:w-10 2xl:w-12 text-center flex-shrink-0">
+                <span className="py-1 border-x border-gray-300 w-8 sm:w-10 2xl:w-12 text-center shrink-0">
                   {quantity}
                 </span>
                 <button
