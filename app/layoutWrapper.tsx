@@ -24,6 +24,13 @@ import { useSyncCart } from "@/hooks/cartRequests/useSyncCart";
 import useAuthStore, { initializeAuthSync } from "@/store/authStore";
 import { initializeCartSync } from "@/store/cartStore";
 import useClockStore from "@/store/clockStore";
+import RouteGuard from "@/components/routeGuard/routeGuard";
+
+// Rutas que requieren autenticación
+const PROTECTED_ROUTES = ['/myProfile', '/orders'];
+
+// Rutas del carrito que requieren items
+const CART_ROUTES = ['/cart1', '/cart2', '/cart3'];
 
 
 
@@ -37,6 +44,9 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
   const hasSynced = useRef(false);
 
   const isAuthRoute = pathname.startsWith('/login') || pathname.startsWith('/register') || pathname.startsWith('/verificationEmail')|| pathname.startsWith('/changePassword') || pathname.startsWith('/recoverPassword')|| pathname.startsWith('/verificationCodeEmail')|| pathname.startsWith('/enterEmail');
+  
+  const isProtectedRoute = PROTECTED_ROUTES.some(r => pathname === r || pathname.startsWith(`${r}/`));
+  const isCartRoute = CART_ROUTES.some(r => pathname === r || pathname.startsWith(`${r}/`));
   
   const [queryClient] = useState(() => new QueryClient());
 
@@ -118,7 +128,13 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
         {!isAuthRoute && <Header />}
 
         <main className="grow w-full">
-          {children}
+          {isProtectedRoute ? (
+            <RouteGuard type="protected">{children}</RouteGuard>
+          ) : isCartRoute ? (
+            <RouteGuard type="cart">{children}</RouteGuard>
+          ) : (
+            children
+          )}
         </main>
         {!isAuthRoute && <Footer />}
         {!isAuthRoute && <ButtonFloatingCart />}
