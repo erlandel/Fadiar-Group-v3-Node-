@@ -1,0 +1,75 @@
+"use client";
+
+import { useEffect } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import useLoadingStore from "@/store/loadingStore";
+
+export default function RouteChangeListener() {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const stopLoading = useLoadingStore((state) => state.stopLoading);
+  const startLoading = useLoadingStore((state) => state.startLoading);
+
+  // Detener el loader cuando la ruta cambia efectivamente
+  useEffect(() => {
+    // Si salimos del ecosistema de productos, reseteamos la paginación
+    const productRoutes = ['/products', '/productID', '/product'];
+    const isProductRoute = productRoutes.some(route => pathname.startsWith(route));
+    
+    if (!isProductRoute) {
+      sessionStorage.removeItem('products-current-page');
+    }
+
+    // Usamos un pequeño delay para asegurar que el DOM se haya actualizado
+    // y que cualquier startLoading() posterior al push ya se haya ejecutado
+    const handle = setTimeout(() => {
+      stopLoading();
+    }, 50);
+    return () => clearTimeout(handle);
+  }, [pathname, searchParams, stopLoading]);
+
+  // Interceptar clicks globales en enlaces para activar el loader
+  useEffect(() => {
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const anchor = target.closest("a");
+
+      if (
+        anchor &&
+        anchor.href &&
+        !anchor.target &&
+        anchor.origin === window.location.origin &&
+        !anchor.hasAttribute("download") &&
+        !anchor.href.startsWith("mailto:") &&
+        !anchor.href.startsWith("tel:") &&
+        !anchor.href.startsWith("#") &&
+        !e.defaultPrevented &&
+        e.button === 0 && // Solo click izquierdo
+        !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey // Sin teclas modificadoras
+      ) {
+        const normalizePath = (path: string) => {
+          let p = path.split("?")[0].split("#")[0];
+          return p.endsWith("/") ? p.slice(0, -1) : p;
+        };
+
+        const targetPath = normalizePath(anchor.pathname);
+        const currentPath = normalizePath(window.location.pathname);
+        
+        const targetSearch = anchor.search;
+        const currentSearch = window.location.search;
+
+        // Solo activar si la ruta o búsqueda es diferente a la actual
+        if (targetPath !== currentPath || targetSearch !== currentSearch) {
+          // Si el click fue en un botón dentro del anchor o similar, 
+          // a veces el router de Next.js no navega si se hace stopPropagation
+          startLoading();
+        }
+      }
+    };
+
+    document.addEventListener("click", handleAnchorClick, { capture: true });
+    return () => document.removeEventListener("click", handleAnchorClick, { capture: true });
+  }, [startLoading]);
+
+  return null;
+}
