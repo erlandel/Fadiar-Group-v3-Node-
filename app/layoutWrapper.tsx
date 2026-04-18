@@ -2,6 +2,13 @@
 
 import { usePathname } from 'next/navigation';
 import { useEffect, useState, Suspense, useRef } from 'react';
+
+// Extender Window para el flag global del modal
+declare global {
+  interface Window {
+    __modalOpen?: boolean;
+  }
+}
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -62,6 +69,11 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
       setIsOpen(true);
     }
   }, [isHydrated, province, municipality, isAuthRoute, setIsOpen]);
+
+  // Flag global para pausar carruseles cuando el modal está abierto
+  useEffect(() => {
+    window.__modalOpen = isOpen;
+  }, [isOpen]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;

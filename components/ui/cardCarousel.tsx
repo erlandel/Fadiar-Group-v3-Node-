@@ -3,6 +3,13 @@
 import { ReactNode, useRef, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
+// Extender Window para el flag global del modal
+declare global {
+  interface Window {
+    __modalOpen?: boolean;
+  }
+}
+
 interface CardCarouselProps<T> {
   items: T[];
   renderItem: (item: T, index: number) => ReactNode;
@@ -61,12 +68,17 @@ export default function CardCarousel<T>({
     if (!container || isPaused) return;
 
     let animationFrameId: number;
-    
+
     // Calculate scroll speed
     const baseIncrement = container.offsetWidth / (speed * 10);
-    const scrollSpeed = Math.max(0.1, baseIncrement); 
-    
+    const scrollSpeed = Math.max(0.1, baseIncrement);
+
     const animate = () => {
+      // Pausar si el modal está abierto (flag global)
+      if (window.__modalOpen) {
+        animationFrameId = requestAnimationFrame(animate);
+        return;
+      }
       if (container) {
         if (direction === "left") {
           container.scrollLeft += scrollSpeed;
