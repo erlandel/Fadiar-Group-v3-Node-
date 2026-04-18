@@ -67,7 +67,7 @@ export function CheckoutStepper({ currentStep = 0 }: CheckoutStepperProps) {
                     ? "border-accent bg-white text-primary "
                     : isCompleted
                     ? "border-accent bg-white text-primary " 
-                    : "border-transparent bg-[#E1E5EB] text-gray-500" 
+                    : "border-transparent bg-snow text-gray-500" 
                 }`}
               >
                 <Icon className="h-5 w-5" />
