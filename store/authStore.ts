@@ -73,11 +73,6 @@ let authSyncInitialized = false;
 const canUseBrowserAPIs = () =>
   typeof window !== "undefined" && typeof localStorage !== "undefined";
 
-const setAuthCookie = (isAuthenticated: boolean) => {
-  if (typeof document === "undefined") return;
-  document.cookie = `auth-status=${isAuthenticated}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax`;
-};
-
 const getAuthChannel = () => {
   if (typeof window === "undefined" || typeof BroadcastChannel === "undefined") {
     return null;
@@ -173,11 +168,8 @@ export const useAuthStore = create<AuthState>()(
 
       setAuth: (payload) =>
         set(() => {
-          setAuthCookie(true);
           broadcastAuthState(payload);
-          return {
-            auth: payload,
-          };
+          return { auth: payload };
         }),
 
       updatePerson: (personUpdates) =>
@@ -202,11 +194,8 @@ export const useAuthStore = create<AuthState>()(
 
       clearAuth: () =>
         set(() => {
-          setAuthCookie(false);
           broadcastAuthState(null);
-          return {
-            auth: null,
-          };
+          return { auth: null };
         }),
     }),
     {

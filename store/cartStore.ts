@@ -64,11 +64,6 @@ let cartSyncInitialized = false;
 const canUseBrowserAPIs = () =>
   typeof window !== "undefined" && typeof localStorage !== "undefined";
 
-const setCartCookie = (hasItems: boolean) => {
-  if (typeof document === "undefined") return;
-  document.cookie = `cart-has-items=${hasItems}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax`;
-};
-
 const getCartChannel = () => {
   if (typeof window === "undefined" || typeof BroadcastChannel === "undefined") {
     return null;
@@ -197,7 +192,6 @@ const cartStore = create<CartStore>()(
               items: [...state.items, { ...item, quantity }],
               rawCart: state.rawCart,
             };
-            setCartCookie(true);
             broadcastCartState(nextState);
             return nextState;
           }
@@ -211,7 +205,6 @@ const cartStore = create<CartStore>()(
             items: updatedItems,
             rawCart: state.rawCart,
           };
-          setCartCookie(true);
           broadcastCartState(nextState);
           return nextState;
         });
@@ -231,7 +224,6 @@ const cartStore = create<CartStore>()(
             ),
             rawCart: state.rawCart,
           };
-          setCartCookie(nextState.items.length > 0);
           broadcastCartState(nextState);
           return nextState;
         });
@@ -243,7 +235,6 @@ const cartStore = create<CartStore>()(
             items: state.items.filter((item) => item.productId !== productId),
             rawCart: state.rawCart,
           };
-          setCartCookie(nextState.items.length > 0);
           broadcastCartState(nextState);
           return nextState;
         }),
@@ -251,7 +242,6 @@ const cartStore = create<CartStore>()(
       setItems: (items) =>
         set((state) => {
           const nextState = { items, rawCart: state.rawCart };
-          setCartCookie(nextState.items.length > 0);
           broadcastCartState(nextState);
           return nextState;
         }),
@@ -266,7 +256,6 @@ const cartStore = create<CartStore>()(
       clearCart: () =>
         set(() => {
           const nextState = { items: [], rawCart: [] };
-          setCartCookie(false);
           broadcastCartState(nextState);
           return nextState;
         }),
