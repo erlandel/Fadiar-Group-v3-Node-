@@ -49,9 +49,12 @@ export type AuthPayload = {
 
 export type AuthState = {
   auth: AuthPayload | null;
+  shouldClearCartAfterOrder: boolean;
   setAuth: (payload: AuthPayload) => void;
   updatePerson: (person: Partial<Person>) => void;
   clearAuth: () => void;
+  setShouldClearCartAfterOrder: (value: boolean) => void;
+  resetShouldClearCartAfterOrder: () => void;
 };
 
 type PersistedAuthStore = {
@@ -165,6 +168,7 @@ export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       auth: null,
+      shouldClearCartAfterOrder: false,
 
       setAuth: (payload) =>
         set(() => {
@@ -197,6 +201,16 @@ export const useAuthStore = create<AuthState>()(
           broadcastAuthState(null);
           return { auth: null };
         }),
+
+      setShouldClearCartAfterOrder: (value) =>
+        set(() => ({
+          shouldClearCartAfterOrder: value,
+        })),
+
+      resetShouldClearCartAfterOrder: () =>
+        set(() => ({
+          shouldClearCartAfterOrder: false,
+        })),
     }),
     {
       name: AUTH_STORAGE_NAME,
@@ -206,6 +220,9 @@ export const useAuthStore = create<AuthState>()(
           : (undefined as unknown as Storage)
       ),
       version: 1,
+      partialize: (state) => ({
+        auth: state.auth,
+      }),
     }
   )
 );

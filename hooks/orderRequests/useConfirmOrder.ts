@@ -112,8 +112,13 @@ export const useConfirmOrder = () => {
         });
       }
 
-      // Limpiar carrito y solo las tiendas del formulario tras éxito 
-      clearCart();
+      useAuthStore.getState().setShouldClearCartAfterOrder(true);
+
+      
+      // Redirigir al inicio o a una página de éxito
+      router.push("/orders");
+
+      // No limpiar el carrito aquí: RouteGuard (type="cart") redirige al home si el carrito queda vacío.
       updateFormData({
         stores: [],
         showDeliveryOverlay: true,
@@ -125,8 +130,6 @@ export const useConfirmOrder = () => {
 
     
 
-      // Redirigir al inicio o a una página de éxito
-      router.push("/orders");
     },
     onError: (error: any) => {
       console.error("Error al confirmar la orden:", error);    

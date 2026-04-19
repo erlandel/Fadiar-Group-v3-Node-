@@ -10,10 +10,18 @@ import { BestSelling } from "@/sections/sectionsProducts/bestSelling";
 import { useGetOrders } from "@/hooks/orderRequests/useGetOrders";
 import InformationMessage from "@/messages/informationMessage";
 import MatterCart1Store from "@/store/matterCart1Store";
+import useAuthStore from "@/store/authStore";
+import cartStore from "@/store/cartStore";
 
 export default function Orders() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  const shouldClearCartAfterOrder = useAuthStore(
+    (state) => state.shouldClearCartAfterOrder
+  );
+  const resetShouldClearCartAfterOrder = useAuthStore(
+    (state) => state.resetShouldClearCartAfterOrder
+  );
   
   const { 
     orders, 
@@ -35,6 +43,12 @@ export default function Orders() {
       updateFormData({ showDeliveryOverlay: false });
     }
   }, [formData.showDeliveryOverlay, updateFormData]);
+
+  useEffect(() => {
+    if (!shouldClearCartAfterOrder) return;
+    cartStore.getState().clearCart();
+    resetShouldClearCartAfterOrder();
+  }, [shouldClearCartAfterOrder, resetShouldClearCartAfterOrder]);
 
   // Objeto simulado para mantener compatibilidad con componentes hijos
   const fetchOrdersStatus = {
