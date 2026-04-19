@@ -11,8 +11,6 @@ export const useSyncCart = (autoSync: boolean = false) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-  const setItems = useCartStore((state) => state.setItems);
-  const setRawCart = useCartStore((state) => state.setRawCart);
   const items = useCartStore((state) => state.items);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
