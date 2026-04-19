@@ -41,7 +41,7 @@ export default function BannerPot() {
         <img
           src="/images/Banner.webp"
           alt=""
-          fetchPriority="high"
+          // fetchPriority="high"
           aria-hidden="true"
           className="w-full h-[400px] sm:h-[360px] md:h-[280px] lg:h-[300px] xl:h-[360px] 2xl:h-[380px] row-start-1 col-start-1 object-cover object-center"
         />
@@ -68,7 +68,7 @@ export default function BannerPot() {
                 key={src}
                 src={src}
                 alt="Background"
-                fetchPriority="high"
+                // fetchPriority="high"
                 className={`row-start-1 col-start-1 h-60 md:h-60 lg:h-80 xl:h-110 2xl:h-110 object-cover mt-1 ${
                   i === index
                     ? "block animate__animated animate__zoomIn z-20 [animation-duration:2s] [animation-timing-function:ease-in-out]"
