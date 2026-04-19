@@ -13,19 +13,25 @@ export default function RouteChangeListener() {
   // Detener el loader cuando la ruta cambia efectivamente
   useEffect(() => {
     // Si salimos del ecosistema de productos, reseteamos la paginación
-    const productRoutes = ['/products', '/productID', '/product'];
+    const productRoutes = ['/products', '/productID'];
     const isProductRoute = productRoutes.some(route => pathname.startsWith(route));
     
     if (!isProductRoute) {
       sessionStorage.removeItem('products-current-page');
     }
 
-    // Usamos un pequeño delay para asegurar que el DOM se haya actualizado
-    // y que cualquier startLoading() posterior al push ya se haya ejecutado
-    const handle = setTimeout(() => {
-      stopLoading();
-    }, 50);
-    return () => clearTimeout(handle);
+    // Esperamos dos frames para asegurar que el browser pintó el nuevo contenido
+    // antes de parar el loader, sin importar redirects intermedios
+    let raf1: number, raf2: number;
+    raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        stopLoading();
+      });
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
   }, [pathname, searchParams, stopLoading]);
 
   // Interceptar clicks globales en enlaces para activar el loader
@@ -49,7 +55,7 @@ export default function RouteChangeListener() {
       ) {
         const normalizePath = (path: string) => {
           let p = path.split("?")[0].split("#")[0];
-          return p.endsWith("/") ? p.slice(0, -1) : p;
+          return p.endsWith("/") ? p : `${p}/`;
         };
 
         const targetPath = normalizePath(anchor.pathname);
