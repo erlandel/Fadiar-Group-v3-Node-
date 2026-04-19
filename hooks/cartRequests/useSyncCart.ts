@@ -134,8 +134,8 @@ export const useSyncCart = (autoSync: boolean = false) => {
   const scheduledExpiryRef = useRef<number | null>(null);
 
   const syncCart = useCallback(async () => {
-    // ✅ Lee el estado actual del store en el momento de ejecución, evitando stale closure
-    if (useCartStore.getState().items.length === 0) return;
+    const { auth } = useAuthStore.getState();
+    if (!auth?.access_token || !auth?.user?.id) return;
 
     setLoading(true);
     try {
