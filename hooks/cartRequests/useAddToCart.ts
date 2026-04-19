@@ -1,18 +1,16 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import useCartStore, { CartItem } from "@/store/cartStore";
+import { CartItem } from "@/store/cartStore";
 import useAuthStore from "@/store/authStore";
 import { refreshToken } from "@/utils/refreshToken";
 import ErrorMessage from "@/messages/errorMessage";
 import SuccesMessage from "@/messages/succesMessage";
-import { useSyncCart } from "./useSyncCart";
+import { syncCartStandalone } from "@/utils/syncCart";
 import { add_product_to_cartUrl } from "@/urlApi/urlApi";
 
 export const useAddToCart = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const addOrUpdateItemLocal = useCartStore((state) => state.addOrUpdateItem);
-  const { syncCart } = useSyncCart();
 
   const addToCart = async (item: CartItem) => {
     const { auth, setAuth } = useAuthStore.getState();
@@ -58,7 +56,9 @@ export const useAddToCart = () => {
         // 2. SOLO si la respuesta es exitosa (200 OK), actualizamos el carrito local
         // addOrUpdateItemLocal(item);
         // Sincronizamos el carrito completo para asegurar consistencia
-        await syncCart();
+        console.log("[addToCart] Llamando a syncCartStandalone...");
+        const syncResult = await syncCartStandalone();
+        console.log("[addToCart] Resultado de syncCartStandalone:", syncResult);
         SuccesMessage("Producto agregado al carrito");
       } else {
         const errorData = await response.json().catch(() => ({}));

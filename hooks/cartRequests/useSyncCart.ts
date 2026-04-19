@@ -1,11 +1,11 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import useCartStore, { CartItem } from "@/store/cartStore";
-import useAuthStore from "@/store/authStore";
-import MatterCart1Store from "@/store/matterCart1Store";
-import { refreshToken } from "@/utils/refreshToken";
-import { get_cart_productsUrl } from "@/urlApi/urlApi";
 import WarningMenssage from "@/messages/warningMenssage";
+import { syncCartStandalone } from "@/utils/syncCart";
+
+// Re-exportar para compatibilidad
+export { syncCartStandalone };
 
 export const useSyncCart = (autoSync: boolean = false) => {
   const [loading, setLoading] = useState(false);
@@ -19,120 +19,14 @@ export const useSyncCart = (autoSync: boolean = false) => {
   const scheduledExpiryRef = useRef<number | null>(null);
 
   const syncCart = useCallback(async () => {
-    const { auth, setAuth } = useAuthStore.getState();
-
-    if (!auth?.access_token || !auth?.user?.id) {
-      return;
-    }
-
     setLoading(true);
     try {
-      const token = await refreshToken(auth, setAuth);
-      if (!token) {
-        return;
-      }
-  // Si el carrito se vació localmente mientras esperábamos el token o la petición, abortamos
-      if (useCartStore.getState().items.length === 0 && items.length > 0) {
-        setLoading(false);
-        return false;
-      }
-      const response = await fetch(`${get_cart_productsUrl}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          id_user: auth.user.id,
-          comisiones: true,
-        }),
-      });
-
-    
-      if (response.ok) {
-        const data = await response.json();
-        
-        console.log("Carrito obtenido del backend:", data);
-
-        const mappedItems: CartItem[] = [];
-        const rawCarrito = data.carrito || [];
-        const expiran: boolean = data.expiran; 
-
-        setRawCart(rawCarrito);
-
-        if (rawCarrito.length > 0) {
-          MatterCart1Store.getState().updateFormData({ delivery: false });
-        }
-
-        rawCarrito.forEach((tienda: any) => {
-          const tiendaId = tienda.id;
-          const tiendaName = tienda.name;
-          const tiendaDireccion = tienda.direccion;
-          const productos = tienda.productos || [];
-          
-          productos.forEach((item: any) => {
-            const p = item.producto;
-            // Solo añadimos el producto si existe y si NO ha expirado (aliveUntil > 0)
-            if (p && item.aliveUntil > 0) {
-              mappedItems.push({
-                cartId: item.id,
-                productId: String(p.id),
-                title: p.name,
-                brand: p.brand,
-                category: p.categoria?.name,
-                warranty: p.warranty ? String(p.warranty) : undefined,
-                price:
-                  p.temporal_price && Number(p.temporal_price) !== 0
-                    ? String(p.temporal_price)
-                    : String(p.price),
-                temporal_price: p.temporal_price
-                  ? String(p.temporal_price)
-                  : undefined,
-                image: p.img,
-                quantity: item.en_carrito,
-                expiryTimestamp: expiran && item.aliveUntil ? Date.now() + Number(item.aliveUntil) * 1000 : undefined,
-                currency: p.currency,
-                tiendaId: tiendaId,
-                tiendaName: tiendaName,
-                tiendaDireccion: tiendaDireccion,
-              });
-            }
-          });
-        });
-
-        setItems(mappedItems);
-
-        // Sincronizar stores de cart3: quitar productos expirados y actualizar expiryTimestamp
-        const currentStores = MatterCart1Store.getState().formData.stores;
-        if (currentStores && currentStores.length > 0) {
-          const updatedStores = currentStores
-            .map((store) => ({
-              ...store,
-              products: store.products
-                .filter((p: any) =>
-                  mappedItems.some((item) => String(item.productId) === String(p.productId))
-                )
-                .map((p: any) => {
-                  const updated = mappedItems.find(
-                    (item) => String(item.productId) === String(p.productId)
-                  );
-                  return updated ? { ...p, expiryTimestamp: updated.expiryTimestamp } : p;
-                }),
-            }))
-            .filter((store) => store.products.length > 0);
-
-          MatterCart1Store.getState().updateFormData({ stores: updatedStores });
-        }
-      } else {
-        const errorData = await response.json().catch(() => ({}));
-        console.error("Error al obtener el carrito:", errorData);
-      }
-    } catch (error) {
-      console.error("Error de conexión al sincronizar el carrito:", error);
+      // Usar la función standalone que accede directo al store
+      await syncCartStandalone();
     } finally {
       setLoading(false);
     }
-  }, [setItems, setRawCart]);
+  }, []);
 
   useEffect(() => {
     if (!autoSync || items.length === 0) {
