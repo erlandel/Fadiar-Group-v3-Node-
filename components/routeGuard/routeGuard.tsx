@@ -41,8 +41,7 @@ export default function RouteGuard({ children, type, redirectTo }: RouteGuardPro
     }
 
     if (type === "protected" && !isAuthenticated) {
-      const currentPath = window.location.pathname;
-      router.replace(`${redirectTo ?? "/login"}?redirect=${currentPath}`);
+      router.replace(redirectTo ?? "/");
       return;
     }
 
