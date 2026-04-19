@@ -36,7 +36,9 @@ export default function Menu() {
   ];
 
   const checkActive = (href: string) => {
-    const normalizedPath = pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
+    const normalizedPath = pathname.endsWith("/")
+      ? pathname.slice(0, -1)
+      : pathname;
     const normalizedHref = href.endsWith("/") ? href.slice(0, -1) : href;
     return normalizedPath === normalizedHref;
   };
@@ -65,7 +67,8 @@ export default function Menu() {
     if (
       prev === "/products" &&
       curr !== "/products" &&
-      !curr.startsWith("/productID") && !curr.startsWith("/product/")
+      !curr.startsWith("/productID") &&
+      !curr.startsWith("/product/")
     ) {
       setSelectedCategories([]);
     }
@@ -105,7 +108,7 @@ export default function Menu() {
         className="xl:hidden  top-4 left-4 z-50 p-2"
         aria-label="Abrir menú"
       >
-     <MaterialSymbolsMenu className="w-6 h-6" />
+        <MaterialSymbolsMenu className="w-6 h-6" />
       </button>
 
       {/* Overlay */}
@@ -125,7 +128,16 @@ export default function Menu() {
         <div className="p-6 ">
           {/* Logo y botón cerrar */}
           <div className="flex justify-between items-center mb-8">
-            <Image src="/images/logo.svg" alt="Logo" width={100} height={50} />
+                <Link href="/">
+            <Image 
+            src="/images/logo.svg" 
+            alt="Logo"
+             width={0} 
+             height={0} 
+             className="h-10 w-30"
+             />
+              </Link>
+
             <button
               onClick={() => setIsOpen(false)}
               className="text-gray-600 hover:text-gray-900"
@@ -138,152 +150,149 @@ export default function Menu() {
           <hr className="mb-6 border-gray-200" />
 
           {/* Links del menú móvil */}
-          <nav
-            className="flex flex-col gap-6"
-          >
+          <nav className="flex flex-col gap-6">
             {links.map((link) => (
-                <div
-                  key={link.href}
-                  className="flex flex-col relative font-bold"
-                  ref={link.href === "/products" ? productsItemRef : undefined}
-                >
-                  <div className="flex items-center justify-between">
-                    {link.href === "/products" ? (
-                      <button
-                        onClick={() =>
-                          setIsProductsSubmenuOpen(!isProductsSubmenuOpen)
-                        }
-                        className={`flex w-full items-center  text-md transition hover:text-primary ${
-                          checkActive(link.href)
-                            ? "text-accent font-semibold"
-                            : "text-gray-700"
-                        }`}
-                        aria-expanded={isProductsSubmenuOpen}
-                        aria-controls="products-submenu"
-                      >
-                        <span>{link.label}</span>
-                        {isProductsSubmenuOpen ? (
-                          <ChevronUp className="w-5 h-5" />
-                        ) : (
-                          <ChevronDown className="w-5 h-5" />
-                        )}
-                      </button>
-                    ) : (
-                      <Link
-                        href={link.href}
-                        onClick={() => {
-                          setIsOpen(false);
-                          if (!checkActive(link.href)) startLoading();
-                        }}
-                        className={`text-md transition hover:text-accent ${
-                          checkActive(link.href)
-                            ? "text-accent font-semibold"
-                            : "text-gray-700"
-                        }`}
-                      >
-                        {link.label}
-                      </Link>
-                    )}
-                  </div>
-
-                  {link.href === "/products" && isProductsSubmenuOpen && (
-                    <div
-                      id="products-submenu"
-                      className="absolute left-0 top-full z-50 bg-white shadow-lg rounded-lg border border-gray-100 px-4 py-3 mt-2 overflow-x-auto overflow-y-auto custom-scrollbar max-h-120 flex flex-col gap-3 w-max"
+              <div
+                key={link.href}
+                className="flex flex-col relative font-bold"
+                ref={link.href === "/products" ? productsItemRef : undefined}
+              >
+                <div className="flex items-center justify-between">
+                  {link.href === "/products" ? (
+                    <button
+                      onClick={() =>
+                        setIsProductsSubmenuOpen(!isProductsSubmenuOpen)
+                      }
+                      className={`flex w-full items-center  text-md transition hover:text-primary ${
+                        checkActive(link.href)
+                          ? "text-accent font-semibold"
+                          : "text-gray-700"
+                      }`}
+                      aria-expanded={isProductsSubmenuOpen}
+                      aria-controls="products-submenu"
                     >
-                      <button
-                        onClick={() => {
-                          setIsOpen(false);
-                          if (!checkActive("/products")) {
-                            startLoading();
-                            router.push("/products");
-                          } else {
-                            setShouldScrollToProducts(true);
-                          }
-                          setSelectedCategories([]);
-                        }}
-                        className={`w-full text-left text-sm transition flex items-center gap-2 ${
-                          checkActive("/products") && selectedCategories.length === 0
-                            ? "text-accent font-bold"
-                            : "text-gray-600 hover:text-accent"
-                        }`}>
-                        <span
-                          className={`inline-block w-4 h-4 rounded-full border-2 border-dashed ${
-                            checkActive("/products") && selectedCategories.length === 0
-                              ? "border-accent "
-                              : "border-gray-300 bg-transparent"
-                          }`}
-                        />
-                        <span className="whitespace-nowrap">Ver todos los productos</span>
-                      </button>
-                      {availableCategories.map((cat) => {
-                        const isSelected = selectedCategories.includes(cat.value);
-                        return (
-                          <button
-                            key={cat.value}
-                            onClick={() => {
-                              handleCategoryClick(cat.value);
-                              setIsOpen(false);
-                            }}
-                            className={`w-full text-left text-sm transition hover:text-accent flex items-center gap-2 ${
-                              isSelected ? "text-accent font-bold" : "text-gray-600"
-                            }`}
-                          >
-                            <span
-                              className={`inline-block w-4 h-4 rounded-full border-2 border-dashed ${
-                                isSelected
-                                  ? "border-accent "
-                                  : "border-gray-300 bg-transparent"
-                              }`}
-                            />
-                            <span className="whitespace-nowrap">{cat.label}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
+                      <span>{link.label}</span>
+                      {isProductsSubmenuOpen ? (
+                        <ChevronUp className="w-5 h-5" />
+                      ) : (
+                        <ChevronDown className="w-5 h-5" />
+                      )}
+                    </button>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      onClick={() => {
+                        setIsOpen(false);
+                        if (!checkActive(link.href)) startLoading();
+                      }}
+                      className={`text-md transition hover:text-accent ${
+                        checkActive(link.href)
+                          ? "text-accent font-semibold"
+                          : "text-gray-700"
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
                   )}
                 </div>
+
+                {link.href === "/products" && isProductsSubmenuOpen && (
+                  <div
+                    id="products-submenu"
+                    className="absolute left-0 top-full z-50 bg-white shadow-lg rounded-lg border border-gray-100 px-4 py-3 mt-2 overflow-x-auto overflow-y-auto custom-scrollbar max-h-120 flex flex-col gap-3 w-max"
+                  >
+                    <button
+                      onClick={() => {
+                        setIsOpen(false);
+                        if (!checkActive("/products")) {
+                          startLoading();
+                          router.push("/products");
+                        } else {
+                          setShouldScrollToProducts(true);
+                        }
+                        setSelectedCategories([]);
+                      }}
+                      className={`w-full text-left text-sm transition flex items-center gap-2 ${
+                        checkActive("/products") &&
+                        selectedCategories.length === 0
+                          ? "text-accent font-bold"
+                          : "text-gray-600 hover:text-accent"
+                      }`}
+                    >
+                      <span
+                        className={`inline-block w-4 h-4 rounded-full border-2 border-dashed ${
+                          checkActive("/products") &&
+                          selectedCategories.length === 0
+                            ? "border-accent "
+                            : "border-gray-300 bg-transparent"
+                        }`}
+                      />
+                      <span className="whitespace-nowrap">
+                        Ver todos los productos
+                      </span>
+                    </button>
+                    {availableCategories.map((cat) => {
+                      const isSelected = selectedCategories.includes(cat.value);
+                      return (
+                        <button
+                          key={cat.value}
+                          onClick={() => {
+                            handleCategoryClick(cat.value);
+                            setIsOpen(false);
+                          }}
+                          className={`w-full text-left text-sm transition hover:text-accent flex items-center gap-2 ${
+                            isSelected
+                              ? "text-accent font-bold"
+                              : "text-gray-600"
+                          }`}
+                        >
+                          <span
+                            className={`inline-block w-4 h-4 rounded-full border-2 border-dashed ${
+                              isSelected
+                                ? "border-accent "
+                                : "border-gray-300 bg-transparent"
+                            }`}
+                          />
+                          <span className="whitespace-nowrap">{cat.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             ))}
           </nav>
-
         </div>
       </div>
-
-
-
-
-
-
 
       {/* Menú desktop - Solo visible en md y superiores */}
       <div className="hidden xl:block w-full bg-white ml-5">
         <nav className="relative flex justify-center gap-9 text-sm font-bold ">
           {links.map((link) => (
-              <div key={link.href} className="group pb-2">
-                <Link
-                
-                  href={link.href}
-                  onClick={() => {
-                    if (!checkActive(link.href)) startLoading();
-                  }}
-                  className={`transition flex items-center  hover:text-accent   ${
-                    checkActive(link.href) ? "text-accent font-semibold" : "text-gray-700"
-                  }`}
-                >
-                  {link.label}
-                  {link.href === "/products" && (
-                    <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
-                  )}
-                </Link>
+            <div key={link.href} className="group pb-2">
+              <Link
+                href={link.href}
+                onClick={() => {
+                  if (!checkActive(link.href)) startLoading();
+                }}
+                className={`transition flex items-center  hover:text-accent   ${
+                  checkActive(link.href)
+                    ? "text-accent font-semibold"
+                    : "text-gray-700"
+                }`}
+              >
+                {link.label}
+                {link.href === "/products" && (
+                  <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
+                )}
+              </Link>
 
-                {link.href === "/products" && availableCategories.length > 0 && (
-                <div >            
-             
+              {link.href === "/products" && availableCategories.length > 0 && (
+                <div>
                   <div className="absolute left-0 right-0 top-full hidden group-hover:flex justify-center xl:-ml-5">
                     <div className="w-full  bg-white shadow-lg rounded-b-lg border border-gray-100 px-6 py-4 mt-0.5">
                       <div className="overflow-y-auto custom-scrollbar mx-2">
                         <div className="grid grid-cols-[repeat(6,auto)] 2xl:grid-cols-[repeat(7,auto)] justify-between gap-x-4 gap-y-1 w-full">
-                      
                           {availableCategories.map((cat) => (
                             <button
                               key={cat.value}
@@ -301,7 +310,9 @@ export default function Menu() {
                                     : "border-gray-300 bg-transparent"
                                 }`}
                               />
-                              <span className="whitespace-nowrap">{cat.label}</span>
+                              <span className="whitespace-nowrap">
+                                {cat.label}
+                              </span>
                             </button>
                           ))}
                         </div>
@@ -309,10 +320,9 @@ export default function Menu() {
                     </div>
                   </div>
                 </div>
-
-                )}
-              </div>
-            ))}
+              )}
+            </div>
+          ))}
         </nav>
       </div>
     </>

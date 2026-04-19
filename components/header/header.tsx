@@ -37,8 +37,8 @@ export default function Header() {
             <Image
               src="/images/logo.svg"
               alt="Logo"
-              width={100}
-              height={100}
+              width={0}
+              height={0}
               className="h-10 w-32"
             />
           </div>
