@@ -5,7 +5,7 @@ import useAuthStore from "@/store/authStore";
 import { refreshToken } from "@/utils/refreshToken";
 import ErrorMessage from "@/messages/errorMessage";
 import SuccesMessage from "@/messages/succesMessage";
-import { syncCartStandalone } from "@/utils/syncCart";
+import { syncCartStandalone } from "@/hooks/cartRequests/useSyncCart";
 import { add_product_to_cartUrl } from "@/urlApi/urlApi";
 
 export const useAddToCart = () => {
