@@ -32,9 +32,9 @@ export const LatestProducts = ({
           <h2 className="text-[20px] font-bold text-[#022954]">
             Más recientes
           </h2>
-          <h1 className="text-[24px] font-bold text-accent mb-2">
+          <h2 className="text-[24px] font-bold text-accent mb-2">
             Últimos productos
-          </h1>
+          </h2>
         </div>
 
         <div className="w-full">

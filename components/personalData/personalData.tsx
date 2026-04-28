@@ -81,7 +81,7 @@ export default function PersonalData() {
             setIsModalOpen(false);
             setEditingId(null);
           },
-        }
+        },
       );
     }
   };
@@ -201,7 +201,7 @@ export default function PersonalData() {
           </div>
 
           <div className="mt-3">
-            <h6>Listdo de direcciones</h6>
+           <h6>Listado de direcciones</h6>
             <div className="w-full rounded-lg px-2 sm:px-4 py-3 bg-[#F5F7FA] text-gray-700 placeholder:text-gray-500 resize-none focus:outline-none focus:ring-2 focus:ring-accent mt-2 min-h-[100px] max-h-[400px] overflow-y-auto ">
               {isLoadingAddresses ? (
                 <div className="flex justify-center items-center h-20">
@@ -266,7 +266,7 @@ export default function PersonalData() {
                         </div>
                       </div>
 
-                      <div >
+                      <div>
                         <span className="text-primary font-bold">
                           Dirección:
                         </span>
@@ -350,8 +350,12 @@ export default function PersonalData() {
         onClose={() => setIsModalOpen(false)}
         mode={modalMode}
         initialValue={initialAddress}
-        initialProvince={addresses?.find((a: any) => a.id === editingId)?.provincia}
-        initialMunicipalityId={addresses?.find((a: any) => a.id === editingId)?.municipioId ?? null}
+        initialProvince={
+          addresses?.find((a: any) => a.id === editingId)?.provincia
+        }
+        initialMunicipalityId={
+          addresses?.find((a: any) => a.id === editingId)?.municipioId ?? null
+        }
         onConfirm={(value) => handleModalConfirm(value)}
         isPending={modalMode === "add" ? isAddingAddress : isEditingAddress}
       />

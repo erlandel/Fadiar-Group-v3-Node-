@@ -11,9 +11,9 @@ export default function Shipping() {
             <Link href="/" className="text-gray-400 cursor-pointer">
               Inicio -{" "}
             </Link>
-            <span className="text-primary font-semibold">Envio</span>
+            <span className="text-primary font-semibold">Envío</span>
           </p>
-          <h1 className="text-3xl text-primary font-bold mb-8">Envio</h1>
+          <h1 className="text-3xl text-primary font-bold mb-8">Envío</h1>
         </div>
 
         <section className="mt-10">

@@ -56,9 +56,18 @@ export default function CardCarousel<T>({
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  // Clean up timer on unmount
+
+  // Clean up timer on unmount + check if mouse is already hovering on mount
   useEffect(() => {
+    // Verificar si el mouse ya está sobre el carrusel después del primer paint
+    const rafId = requestAnimationFrame(() => {
+      if (containerRef.current?.matches(':hover')) {
+        setIsPaused(true);
+      }
+    });
+
     return () => {
+      cancelAnimationFrame(rafId);
       if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
     };
   }, []);

@@ -13,7 +13,7 @@ Para realizar compras, el usuario podrá registrarse proporcionando información
 El usuario es responsable de mantener la confidencialidad de sus credenciales de acceso y de todas las actividades realizadas desde su cuenta.
 
 4. Uso del sitio web
-El usuario se compromete a utilizar el sitio web de manera lícita y conforme a la legislación vigente, absteniéndose de:
+El usuario se compromete a utilizar el sitio web de manera lícita y conforme a la legislación vigente en la República de Cuba, absteniéndose de:
 -Realizar actividades fraudulentas.
 -Introducir virus, malware o cualquier otro componente dañino.
 -Vulnerar la seguridad del sitio o de otros usuarios.
@@ -21,7 +21,7 @@ El usuario se compromete a utilizar el sitio web de manera lícita y conforme a 
 
 5. Productos y servicios
 Los productos ofrecidos se describen de la forma más precisa posible.
-No obstante,Grupo Fadiar no garantiza que las descripciones, imágenes o especificaciones estén libres de errores tipográficos o técnicos.
+No obstante, Grupo Fadiar no garantiza que las descripciones, imágenes o especificaciones estén libres de errores tipográficos o técnicos.
 La disponibilidad de los productos está sujeta a existencias y puede variar sin previo aviso.
 
 6. Precios y pagos
@@ -43,7 +43,7 @@ Todos los contenidos del sitio web, incluyendo textos, imágenes, logotipos, dis
 Queda prohibida su reproducción, distribución o uso sin autorización expresa.
 
 10. Protección de datos personales
-Los datos personales proporcionados por el usuario serán tratados conforme a la Política de Privacidad, la cual forma parte integral de estos Términos y Condiciones.
+Los datos personales proporcionados por el usuario serán tratados conforme a la ley 149 “De Protección de Datos Personales”, de 14 de mayo de 2022. 
 
 11. Limitación de responsabilidad
 Grupo Fadiar no será responsable por daños directos o indirectos derivados del uso o imposibilidad de uso del sitio web, incluyendo interrupciones, errores técnicos o fallas del sistema.
@@ -53,8 +53,8 @@ Grupo Fadiar se reserva el derecho de modificar estos Términos y Condiciones en
 Las modificaciones entrarán en vigor desde su publicación en el sitio web.
 
 13. Legislación aplicable y jurisdicción
-Estos Términos y Condiciones se rigen por las leyes de Cuba.
-Cualquier controversia será sometida a los tribunales competentes de Ciudad de La Habana, salvo disposición legal en contrario.
+Estos Términos y Condiciones se rigen por las leyes de la República de Cuba.
+Cualquier controversia derivada de la interpretación, ejecución o cumplimiento de los presentes Términos y Condiciones será sometida a los tribunales competentes de la República de Cuba, en el lugar donde se suscite la controversia, salvo disposición legal en contrario.
 
 14. Contacto
 Para cualquier consulta relacionada con estos Términos y Condiciones, el usuario puede contactarnos a través de:
