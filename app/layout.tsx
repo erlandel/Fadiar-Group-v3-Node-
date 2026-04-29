@@ -4,7 +4,6 @@ import "./globals.css";
 import "animate.css";
 import LayoutWrapper from "./layoutWrapper";
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -18,9 +17,16 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Compra Electrodomésticos Muebles e Iluminación | Tienda Fadiar",
   description: "Descubre productos de calidad para tu hogar en la tienda oficial de Fadiar. Electrodomésticos, mobiliario e iluminación con envíos a toda Cuba. Compra online fácil y seguro.",
-   verification: {
+  verification: {
     google: "HatbJo6eYhsqsPIVuXrSdRdbYdRi8G_HWxec4S3HKmM",
   },
+};
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Fadiar",
+  url: "https://test.grupofadiar.com",
 };
 
 export default function RootLayout({
@@ -29,10 +35,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang="es">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
         <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
