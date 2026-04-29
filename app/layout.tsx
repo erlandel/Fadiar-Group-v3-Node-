@@ -18,6 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Compra Electrodomésticos Muebles e Iluminación | Tienda Fadiar",
   description: "Descubre productos de calidad para tu hogar en la tienda oficial de Fadiar. Electrodomésticos, mobiliario e iluminación con envíos a toda Cuba. Compra online fácil y seguro.",
+   verification: {
+    google: "HatbJo6eYhsqsPIVuXrSdRdbYdRi8G_HWxec4S3HKmM",
+  },
 };
 
 export default function RootLayout({
