@@ -17,4 +17,5 @@ jobs:
           port: ${{ secrets.VPS_PORT }}
           script: |
             set -e
-            /ruta/real/de/tu/script.sh
+            chmod +x /var/www/grupo_fadiar_web_app/deploy.sh
+            /var/www/grupo_fadiar_web_app/deploy.sh
