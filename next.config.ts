@@ -1,10 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-//  output: 'export',
-//   trailingSlash: true,
   images: {
-    // unoptimized: true, //  CRÍTICO para export estático
     remotePatterns: [
       {
         protocol: "https",
@@ -13,6 +10,8 @@ const nextConfig: NextConfig = {
         pathname: "/prueba/api/_images/**",
       },
     ],
+     formats: ["image/webp"], // 👈 solo WebP
+    minimumCacheTTL: 3600,
   },
 };
 
