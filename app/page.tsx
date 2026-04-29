@@ -24,6 +24,7 @@ export default function Home() {
           <NineOffers />
         </div>
 
+
         <div>
           <BannerUpcomingProducts />
         </div>
