@@ -17,5 +17,4 @@ jobs:
           port: ${{ secrets.VPS_PORT }}
           script: |
             set -e
-            chmod +x "${{ secrets.VPS_DEPLOY_SCRIPT }}"
-            "${{ secrets.VPS_DEPLOY_SCRIPT }}"
+            /ruta/absoluta/a/tu/script.sh
