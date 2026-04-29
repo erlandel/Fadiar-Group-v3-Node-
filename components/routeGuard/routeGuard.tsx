@@ -22,13 +22,40 @@ export default function RouteGuard({ children, type, redirectTo }: RouteGuardPro
   const router = useRouter();
   const auth = useAuthStore((state) => state.auth);
   const cartItems = cartStore((state) => state.items);
-  const [isHydrated, setIsHydrated] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(() => {
+    const authHydrated = useAuthStore.persist.hasHydrated();
+    const cartHydrated = cartStore.persist.hasHydrated();
+    return type === "cart" ? authHydrated && cartHydrated : authHydrated;
+  });
 
-  // Esperar a que Zustand rehidrate desde localStorage antes de evaluar
+  // Esperar a la hidratacion real de Zustand antes de evaluar guardas/redirecciones
   useEffect(() => {
-    setIsHydrated(true);
-  }, []);
+    const checkReady = () => {
+      const authReady = useAuthStore.persist.hasHydrated();
+      const cartReady = cartStore.persist.hasHydrated();
+      return type === "cart" ? authReady && cartReady : authReady;
+    };
+  
+    if (checkReady()) {
+      setIsHydrated(true);
+      return;
+    }
+  
+    const updateHydration = () => setIsHydrated(checkReady());
+  
+    const unsubAuth = useAuthStore.persist.onFinishHydration(updateHydration);
+    const unsubCart =
+      type === "cart"
+        ? cartStore.persist.onFinishHydration(updateHydration)
+        : undefined;
+  
+    return () => {
+      unsubAuth?.();
+      unsubCart?.();
+    };
+  }, [type]);
 
+  
   useEffect(() => {
     if (!isHydrated) return;
 

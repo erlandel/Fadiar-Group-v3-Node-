@@ -11,7 +11,7 @@ export default function MyProfile() {
   const userName = auth?.person.name || "";
   return (
     <>
-      <div className="mx-4  xl:mx-85">
+      <div className="mx-4  xl:mx-40 2xl:mx-85">
         <div className="mt-10 ">
           <div>
             <h1 className="text-3xl text-primary font-bold ">Mi Perfil</h1>
