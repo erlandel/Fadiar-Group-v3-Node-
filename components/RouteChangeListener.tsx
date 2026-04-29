@@ -13,7 +13,7 @@ export default function RouteChangeListener() {
   // Detener el loader cuando la ruta cambia efectivamente
   useEffect(() => {
     // Si salimos del ecosistema de productos, reseteamos la paginación
-    const productRoutes = ['/products', '/productID'];
+    const productRoutes = ["/products", "/product"]; 
     const isProductRoute = productRoutes.some(route => pathname.startsWith(route));
     
     if (!isProductRoute) {

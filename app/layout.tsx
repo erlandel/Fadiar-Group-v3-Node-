@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Grupo Fadiar",
-  description: "Venta de electrodomésticos",
+  title: "Compra Electrodomésticos Muebles e Iluminación | Tienda Fadiar",
+  description: "Descubre productos de calidad para tu hogar en la tienda oficial de Fadiar. Electrodomésticos, mobiliario e iluminación con envíos a toda Cuba. Compra online fácil y seguro.",
 };
 
 export default function RootLayout({
