@@ -1,13 +1,9 @@
-import { publicPagesSeo } from "@/data/seoMetaData";
 import { AboutInformation } from "@/sections/aboutUS/aboutInformation";
 import { BannerWorkersFadiar } from "@/components/banner/bannerWorkersFadiar";
 import { SectionMobile } from "@/sections/sectionMobile";
 import { BannerMobilePay } from "@/components/banner/bannerMobilePay";
 import { BestSelling } from "@/sections/sectionsProducts/bestSelling";
 import { LatestProducts } from "@/sections/sectionsProducts/latestProducts";
-import { Metadata } from "next";
-
-export const metadata: Metadata = publicPagesSeo.about;
 
 const About = () => {
   return (

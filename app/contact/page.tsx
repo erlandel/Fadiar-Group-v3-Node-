@@ -1,11 +1,8 @@
-import { publicPagesSeo } from "@/data/seoMetaData";
 import Link from "next/link";
 import { ContactInfo } from "@/components/contactComponents/contactInfo";
 import { ContactMap } from "@/components/contactComponents/contactMap";
 import ContactSocialNetworks from "@/components/contactComponents/contactSocialNetworks";
-import { Metadata } from "next";
 
-export const metadata: Metadata = publicPagesSeo.contact;
 
 const Contact = () => {
   return (

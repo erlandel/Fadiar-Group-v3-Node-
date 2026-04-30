@@ -1,10 +1,7 @@
-import { publicPagesSeo } from "@/data/seoMetaData";
 import Link from "next/link";
 import Accordion from "@/components/accordion/accordion";
 import { warrantyPolicy } from "@/data/warrantyPolicy";
-import { Metadata } from "next";
 
-export const metadata: Metadata = publicPagesSeo.warranty;
 
 const Warranty = () => {
   return (

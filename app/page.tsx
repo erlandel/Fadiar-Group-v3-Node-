@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import "@fontsource/just-me-again-down-here";
 import BannerPot from "@/components/banner/bannerPot";
@@ -7,6 +7,7 @@ import BannerUpcomingProducts from "@/components/banner/bannerUpcomingProducts";
 import NineOffers from "@/sections/sectionsProducts/NineOffers";
 import { LatestProducts } from "@/sections/sectionsProducts/latestProducts";
 import { BestSelling } from "@/sections/sectionsProducts/bestSelling";
+
 
 export default function Home() {
   return (

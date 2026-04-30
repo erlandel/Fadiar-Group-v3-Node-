@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
 import MobileOrdes from "@/components/mobileOrdes/mobileOrdes";
 import OrdersTable from "@/components/ordersTable/ordersTable";
 import { SectionMobile } from "@/sections/sectionMobile";

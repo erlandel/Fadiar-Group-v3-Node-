@@ -1,10 +1,6 @@
-import { publicPagesSeo } from "@/data/seoMetaData";
 import Link from "next/link";
 import Accordion from "@/components/accordion/accordion";
 import { homeDeliveryPolicy } from "@/data/homeDeliveryPolicy";
-import { Metadata } from "next";
-
-export const metadata: Metadata = publicPagesSeo.shipping;
 
 export default function Shipping() {
   return (

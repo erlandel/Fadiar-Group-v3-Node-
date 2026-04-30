@@ -1,4 +1,3 @@
-import { publicPagesSeo } from "@/data/seoMetaData";
 import Link from "next/link";
 import Accordion from "@/components/accordion/accordion";
 import { frequentlyAskedQuestions } from "@/data/frequentlyAskedQuestions";
@@ -7,9 +6,7 @@ import { BannerMobilePay } from "@/components/banner/bannerMobilePay";
 import { BestSelling } from "@/sections/sectionsProducts/bestSelling";
 import BannerUpcomingProducts from "@/components/banner/bannerUpcomingProducts";
 import { LatestProducts } from "@/sections/sectionsProducts/latestProducts";
-import { Metadata } from "next";
 
-export const metadata: Metadata = publicPagesSeo.faq;
 
 export default function Faq() {
   return (
