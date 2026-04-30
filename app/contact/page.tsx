@@ -2,6 +2,9 @@ import Link from "next/link";
 import { ContactInfo } from "@/components/contactComponents/contactInfo";
 import { ContactMap } from "@/components/contactComponents/contactMap";
 import ContactSocialNetworks from "@/components/contactComponents/contactSocialNetworks";
+import { seoMetaData } from "@/data/seoMetaData";
+
+export const metadata = seoMetaData["/contact"];
 
 
 const Contact = () => {

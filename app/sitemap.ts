@@ -48,7 +48,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const productUrls = allProducts.map((p: any) => ({
       url: `https://test.grupofadiar.com/product/${p.id}`,
       lastModified: new Date(),
-      priority: 0.7,
+      priority: 0.9,
     }));
 
     return [

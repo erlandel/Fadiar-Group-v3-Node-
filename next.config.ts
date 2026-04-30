@@ -10,8 +10,6 @@ const nextConfig: NextConfig = {
         pathname: "/prueba/api/_images/**",
       },
     ],
-     formats: ["image/webp"], // 👈 solo WebP
-    minimumCacheTTL: 3600,
   },
 };
 

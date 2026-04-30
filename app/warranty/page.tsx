@@ -1,6 +1,9 @@
 import Link from "next/link";
 import Accordion from "@/components/accordion/accordion";
 import { warrantyPolicy } from "@/data/warrantyPolicy";
+import { seoMetaData } from "@/data/seoMetaData";
+
+export const metadata = seoMetaData["/warranty"];
 
 
 const Warranty = () => {

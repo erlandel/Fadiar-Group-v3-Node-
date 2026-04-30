@@ -4,6 +4,9 @@ import { SectionMobile } from "@/sections/sectionMobile";
 import { BannerMobilePay } from "@/components/banner/bannerMobilePay";
 import { BestSelling } from "@/sections/sectionsProducts/bestSelling";
 import { LatestProducts } from "@/sections/sectionsProducts/latestProducts";
+import { seoMetaData } from "@/data/seoMetaData";
+
+export const metadata = seoMetaData["/about"];
 
 const About = () => {
   return (

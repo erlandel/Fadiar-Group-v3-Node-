@@ -7,6 +7,7 @@ import {
 } from "@/urlApi/urlApi";
 import { ProductID } from "@/types/productId";
 import ProductClient from "./ProductClient";
+import { getProductSeoMetaData } from "@/data/seoMetaData";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -134,21 +135,14 @@ export async function generateMetadata({
     };
   }
   const imageUrl = `${server_url}/${product.img}`;
-  const productUrl = `https://test.grupofadiar.com/product/${id}`;
 
-  return {
-    title: `${product.name} | ${product.brand} | Fadiar`,
+  return getProductSeoMetaData({
+    id,
+    name: `${product.name} | ${product.brand}`,
     description:
-      product.description ||
-      `Compra ${product.name} de ${product.brand} en Fadiar.`,
-    openGraph: {
-      title: `${product.name} | ${product.brand}`,
-      description:
-        product.description || `Compra ${product.name} de ${product.brand}`,
-      images: [{ url: imageUrl, alt: product.name }],
-      url: productUrl,
-    },
-  };
+      product.description || `Compra ${product.name} de ${product.brand} en Fadiar.`,
+    imageUrl,
+  });
 }
 
 // ─── Page ────────────────────────────────────────────────────────────────────

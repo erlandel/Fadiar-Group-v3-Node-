@@ -1,6 +1,9 @@
 import Link from "next/link";
 import Accordion from "@/components/accordion/accordion";
 import { homeDeliveryPolicy } from "@/data/homeDeliveryPolicy";
+import { seoMetaData } from "@/data/seoMetaData";
+
+export const metadata = seoMetaData["/shipping"];
 
 export default function Shipping() {
   return (
