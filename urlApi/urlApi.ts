@@ -57,3 +57,5 @@ export const edit_addressUrl = `${server_url}/editar_direccion_domicilio_cliente
 export const delete_addressUrl = `${server_url}/eliminar_direccion_domicilio_cliente`;
 
 export const noteUrl = `${server_url}/get_messages`;
+
+export const getProductForVisualUrl = `${server_url}/getProductForVisual`;
