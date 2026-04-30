@@ -1,4 +1,3 @@
-import { privatePagesSeo } from "@/data/seoMetaData";
 import Link from "next/link";
 import PaymentMethods from "@/components/paymentMethods/paymentMethods";
 import { CheckoutStepper } from "@/components/ui/stepper";
