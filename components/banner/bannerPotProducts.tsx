@@ -1,4 +1,5 @@
 import "@fontsource/just-me-again-down-here";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 export default function BannerPotProducts() {
@@ -36,14 +37,25 @@ export default function BannerPotProducts() {
   return (
     <>
       <div className="grid h-[400px] sm:h-[360px] md:h-[320px] lg:h-[300px] xl:h-[360px]  2xl:h-[400px]  ">
-        <img
+        {/* <img
           src="/images/Banner.webp"
           alt="banner azul"
           fetchPriority="high"
           loading="eager"
           aria-hidden="true"
           className="w-full h-[380px] sm:h-[360px] md:h-[280px] lg:h-[300px] xl:h-[280px] 2xl:h-[320px] row-start-1 col-start-1 object-cover object-center"
-        />
+        /> */}
+
+        <div className="relative w-full h-[380px] sm:h-[360px] md:h-[280px] lg:h-[300px] xl:h-[280px] 2xl:h-[320px] row-start-1 col-start-1">
+  <Image
+    src="/images/Banner.webp"
+    alt="banner azul"
+    fill
+    priority
+    aria-hidden="true"
+    className="object-cover object-center"
+  />
+</div>
 
         <div className="z-10  mt-8 row-start-1 col-start-1 flex flex-col md:flex-row items-center justify-between 2xl:justify-center  gap-5 mx-4 xl:ml-10 2xl:mx-10">
           <div id="lorem" className=" text-white md:mb-30 w-1/2 ">

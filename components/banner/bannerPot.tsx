@@ -1,5 +1,6 @@
- "use client";
+"use client";
 import "@fontsource/just-me-again-down-here";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 export default function BannerPot() {
@@ -38,18 +39,30 @@ export default function BannerPot() {
   return (
     <>
       <div className="grid h-[400px] sm:h-[360px] md:h-[320px] lg:h-[300px] xl:h-[360px]  2xl:h-[400px]  ">
-        <img
+        {/* <img
           src="/images/Banner.webp"
           alt="banner azul"
           fetchPriority="high"
           loading="eager"
           aria-hidden="true"
           className="w-full h-[400px] sm:h-[360px] md:h-[280px] lg:h-[300px] xl:h-[360px] 2xl:h-[380px] row-start-1 col-start-1 object-cover object-center"
-        />
+        /> */}
+        <div className="relative w-full h-[400px] sm:h-[360px] md:h-[280px] lg:h-[300px] xl:h-[360px] 2xl:h-[380px] row-start-1 col-start-1">
+          <Image
+            src="/images/Banner.webp"
+            alt="banner azul"
+            fill
+            priority
+            aria-hidden="true"
+            className="object-cover object-center"
+          />
+        </div>
 
         <div className="z-10  mt-8 row-start-1 col-start-1 flex flex-col md:flex-row items-center justify-between 2xl:justify-center gap-5 mx-4 lg:mx-10 2xl:mx-20 text-justify sm:text-left ">
-     
-          <div id="lorem" className=" text-white md:mb-30  mx-1.5 sm:mx-0 md:w-1/2  ">
+          <div
+            id="lorem"
+            className=" text-white md:mb-30  mx-1.5 sm:mx-0 md:w-1/2  "
+          >
             <h1 className="text-xl sm:text-[28px] md:text-2xl  xl:text-4xl 2xl:text-[40px] font-bold  animate__animated  animate__lightSpeedInLeft">
               <samp className="text-[#D69F04] block ">
                 Diversidad de soluciones
@@ -63,7 +76,7 @@ export default function BannerPot() {
             </p>
           </div>
 
-         <div className="grid h-full items-end">
+          <div className="grid h-full items-end">
             {images.map((src, i) => (
               <img
                 key={src}
@@ -74,8 +87,8 @@ export default function BannerPot() {
                   i === index
                     ? "block animate__animated animate__zoomIn z-20 [animation-duration:2s] [animation-timing-function:ease-in-out]"
                     : i === prevIndex
-                    ? "block animate__animated animate__zoomOut z-10 [animation-duration:2s] [animation-timing-function:ease-in-out]"
-                    : "hidden"
+                      ? "block animate__animated animate__zoomOut z-10 [animation-duration:2s] [animation-timing-function:ease-in-out]"
+                      : "hidden"
                 }`}
               />
             ))}
@@ -85,4 +98,3 @@ export default function BannerPot() {
     </>
   );
 }
-
