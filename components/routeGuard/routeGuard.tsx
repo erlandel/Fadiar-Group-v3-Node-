@@ -6,6 +6,7 @@ import useAuthStore from "@/store/authStore";
 import cartStore from "@/store/cartStore";
 
 type GuardType = "auth" | "protected" | "cart";
+type GuardDecision = "pending" | "allow" | "redirect";
 
 interface RouteGuardProps {
   children: React.ReactNode;
@@ -22,6 +23,7 @@ export default function RouteGuard({ children, type, redirectTo }: RouteGuardPro
   const router = useRouter();
   const auth = useAuthStore((state) => state.auth);
   const cartItems = cartStore((state) => state.items);
+  const [decision, setDecision] = useState<GuardDecision>("pending");
   const [isHydrated, setIsHydrated] = useState(() => {
     const authHydrated = useAuthStore.persist.hasHydrated();
     const cartHydrated = cartStore.persist.hasHydrated();
@@ -55,38 +57,38 @@ export default function RouteGuard({ children, type, redirectTo }: RouteGuardPro
     };
   }, [type]);
 
-  
   useEffect(() => {
-    if (!isHydrated) return;
-
-    const isAuthenticated = auth !== null;
-    const cartHasItems = cartItems.length > 0;
-
-    if (type === "auth" && isAuthenticated) {
-      router.replace(redirectTo ?? "/");
+    if (!isHydrated) {
+      setDecision("pending");
       return;
     }
 
-    if (type === "protected" && !isAuthenticated) {
-      router.replace(redirectTo ?? "/");
-      return;
-    }
+    // Usar snapshot directo evita decidir con un valor intermedio del selector.
+    const authSnapshot = useAuthStore.getState().auth;
+    const cartSnapshot = cartStore.getState().items;
+    const isAuthenticated = Boolean(authSnapshot?.access_token);
+    const cartHasItems = cartSnapshot.length > 0;
 
-    if (type === "cart" && !cartHasItems) {
-      router.replace(redirectTo ?? "/");
-      return;
-    }
-  }, [isHydrated, auth, cartItems, type, redirectTo, router]);
+    const shouldRedirect =
+      (type === "auth" && isAuthenticated) ||
+      (type === "protected" && !isAuthenticated) ||
+      (type === "cart" && (!isAuthenticated || !cartHasItems));
 
-  // Mientras no hidrata, no renderizar nada para evitar flash de contenido
-  if (!isHydrated) return null;
+    setDecision(shouldRedirect ? "redirect" : "allow");
+  }, [isHydrated, auth, cartItems.length, type]);
 
-  const isAuthenticated = auth !== null;
-  const cartHasItems = cartItems.length > 0;
+  useEffect(() => {
+    if (decision !== "redirect") return;
+    router.replace(redirectTo ?? "/");
+  }, [decision, redirectTo, router]);
 
-  if (type === "auth" && isAuthenticated) return null;
-  if (type === "protected" && !isAuthenticated) return null;
-  if (type === "cart" && !cartHasItems) return null;
+  useEffect(() => {
+    if (decision !== "allow" || typeof window === "undefined") return;
+    window.dispatchEvent(new Event("route-guard-ready"));
+  }, [decision]);
+
+  // Mientras hidrata y decide, no renderizar nada para evitar flashes.
+  if (!isHydrated || decision !== "allow") return null;
 
   return <>{children}</>;
 }

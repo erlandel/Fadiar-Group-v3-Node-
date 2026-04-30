@@ -41,6 +41,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
   const auth = useAuthStore((state) => state.auth);
   const startClock = useClockStore((state) => state.startClock);
   const [isHydrated, setIsHydrated] = useState(false);
+  const [animationTick, setAnimationTick] = useState(0);
   const hasSynced = useRef(false);
 
   const isAuthRoute = pathname.startsWith('/login') || pathname.startsWith('/register') || pathname.startsWith('/verificationEmail')|| pathname.startsWith('/changePassword') || pathname.startsWith('/recoverPassword')|| pathname.startsWith('/verificationCodeEmail')|| pathname.startsWith('/enterEmail');
@@ -87,6 +88,13 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    const onRouteGuardReady = () => setAnimationTick((v) => v + 1);
+    window.addEventListener("route-guard-ready", onRouteGuardReady);
+    return () => window.removeEventListener("route-guard-ready", onRouteGuardReady);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
     const elements = Array.from(document.querySelectorAll<HTMLElement>('.animate-on-scroll'));
     if (elements.length === 0) return;
 
@@ -109,7 +117,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
 
     elements.forEach((el) => io.observe(el));
     return () => io.disconnect();
-  }, [pathname, children]);
+  }, [pathname, children, animationTick]);
 
   return (
     <QueryClientProvider client={queryClient}>
