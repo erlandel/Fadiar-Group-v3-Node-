@@ -151,10 +151,9 @@ export default function MobileOrdes({
                       {/* Teléfono */}
                       <p className="text-sm sm:text-lg">Teléfono</p>
                       <p className=" font-bold text-right sm:text-xl">
-                        {order.client_cell === "-" ||
-                        order.client_cell.startsWith("-")
-                          ? "no disponible"
-                          : order.client_cell}
+                        {order.client_cell?.startsWith("+")
+                            ? order.client_cell
+                            : "no disponible"}
                       </p>
 
                       {/* Estado */}

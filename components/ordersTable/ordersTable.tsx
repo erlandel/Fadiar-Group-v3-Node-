@@ -136,10 +136,9 @@ export default function OrdersTable({
                         <div className="text-center">{order.date}</div>
                         <div className="text-center">{order.time}</div>
                         <div className="text-center">
-                          {order.client_cell === "-" ||
-                          order.client_cell.startsWith("-")
-                            ? "no disponible"
-                            : order.client_cell}
+                          {order.client_cell?.startsWith("+")
+                            ? order.client_cell
+                            : "no disponible"}
                         </div>
                         <div className="text-center">
                           <span
