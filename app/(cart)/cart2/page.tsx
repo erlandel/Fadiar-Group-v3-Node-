@@ -1,9 +1,13 @@
+import { privatePagesSeo } from "@/data/seoMetaData";
 import Link from "next/link";
 import PaymentMethods from "@/components/paymentMethods/paymentMethods";
 import { CheckoutStepper } from "@/components/ui/stepper";
 import { SectionMobile } from "@/sections/sectionMobile";
 import { BannerMobilePay } from "@/components/banner/bannerMobilePay";
 import { BestSelling } from "@/sections/sectionsProducts/bestSelling";
+import { Metadata } from "next";
+
+export const metadata: Metadata = privatePagesSeo.cart2;
 
 export default function Cart2() {
   return (

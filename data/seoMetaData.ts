@@ -1,13 +1,6 @@
 import type { Metadata } from "next";
 
-// Configuración general del sitio
-export const siteConfig = {
-  name: "Tienda Fadiar",
-  url: "https://fadiar.com", // Actualizar cuando se tenga el dominio real
-  defaultTitle: "Tienda Fadiar",
-  defaultDescription: "Venta de electrodomésticos, muebles e iluminación en Cuba",
-  locale: "es_ES",
-};
+
 
 
 // Metadata por página - Páginas públicas (indexables)
