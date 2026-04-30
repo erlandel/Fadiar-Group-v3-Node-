@@ -70,7 +70,7 @@ export default function SectionMoreproducts() {
           <div>
             <img
               src="/images/fan.webp"
-              alt="vent"
+              alt="ventilador"
               className=" object-cover "
             />
           </div>
@@ -102,7 +102,7 @@ export default function SectionMoreproducts() {
           <div className="mt-5">
             <img
               src="/images/Fridge1.webp"
-              alt="vent"
+              alt="refrigerador y nevera"
               className="object-cover"
             />
           </div>

@@ -38,8 +38,9 @@ export default function BannerPotProducts() {
       <div className="grid h-[400px] sm:h-[360px] md:h-[320px] lg:h-[300px] xl:h-[360px]  2xl:h-[400px]  ">
         <img
           src="/images/Banner.webp"
-          alt=""
-          // fetchPriority="high"
+          alt="banner azul"
+          fetchPriority="high"
+          loading="eager"
           aria-hidden="true"
           className="w-full h-[380px] sm:h-[360px] md:h-[280px] lg:h-[300px] xl:h-[280px] 2xl:h-[320px] row-start-1 col-start-1 object-cover object-center"
         />
@@ -64,7 +65,7 @@ export default function BannerPotProducts() {
               <img
                 key={src}
                 src={src}
-                alt="Background"
+                alt="ollas y calderos"
                 // fetchPriority="high"
                 className={`row-start-1 col-start-1 z-10 h-60 md:h-60 lg:h-80 xl:h-80 2xl:h-90 object-cover mt-1 ${
                   i === index
