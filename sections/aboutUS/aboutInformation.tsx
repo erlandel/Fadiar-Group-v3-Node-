@@ -93,7 +93,7 @@ export const AboutInformation = () => {
           <div className="xl:w-1/3 flex justify-center ">
             <img
               src="/images/worker1.webp"
-              alt="dealer"
+              alt="trabajadores de fadiar"
               className=" object-cover xl:h-115"
             />         
           </div>

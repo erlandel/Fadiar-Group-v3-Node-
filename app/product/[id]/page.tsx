@@ -222,7 +222,7 @@ export default function Product({ params }: { params: Promise<{ id: string }> })
                     >
                       <Image
                         src={`${server_url}/${img}`}
-                        alt={`thumb ${i + 1}`}
+                        alt={`Miniatura ${i + 1} de ${product.name}`}
                         width={80}
                         height={80}
                         unoptimized

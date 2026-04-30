@@ -8,7 +8,7 @@ export const SectionMobile = () => {
           <img
             data-animate="animate__flipInY"
             src="/images/mobile.webp"
-            alt="Group"
+            alt="Compra desde tu móvil"
             className="w-full  h-72 object-cover animate-on-scroll animate__slow  [animation-delay:0.6s] "
           />
         </div>

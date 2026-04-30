@@ -27,7 +27,7 @@ export const BannerMobilePay = () => {
               className="animate-on-scroll  [animation-delay:0.5s] h-50 sm:h-70  md:h-85 lg:h-auto"
               data-animate="animate__zoomIn"
               src="/images/Illustration.webp"
-              alt="Ilustración"
+              alt="Pago móvil con billetera digital"
             />
           </div>
         </div>

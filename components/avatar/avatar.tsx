@@ -105,7 +105,7 @@ export default function Avatar() {
     <div className="flex flex-col items-center justify-center">
       <h5 className="text-primary font-bold text-xl">Avatar</h5>
       <div className="relative mt-4">
-        <img src={avatarSrc} alt="avatar" className="w-40 h-40 rounded-full" />
+        <img src={avatarSrc} alt="foto de perfil" className="w-40 h-40 rounded-full" />
         <div
           onClick={handleClick}
           className="absolute bottom-0 right-0 bg-[#F5A51D] rounded-full p-2 cursor-pointer"

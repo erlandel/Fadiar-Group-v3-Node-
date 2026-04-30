@@ -34,7 +34,7 @@ export default function CreditCards() {
       id: "zelle",
       title: "Zelle", 
       description: "Pago mediante transferencia bancaria", 
-      icon: <img src="/images/Zelle.webp" alt="Efectivo o Transferencia" width={37} height={37} className="object-contain" /> 
+      icon: <img src="/images/Zelle.webp" alt="Zelle" width={37} height={37} className="object-contain" /> 
     }
   ];
 
