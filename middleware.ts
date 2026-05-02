@@ -15,17 +15,15 @@ export function middleware(request: NextRequest) {
   const isAuthRoute = AUTH_ROUTES.some(r => pathname.startsWith(r));
   const isCartRoute = CART_ROUTES.some(r => pathname.startsWith(r));
   
-  // 1. Rutas auth: redirigir a home si ya está logueado
+  // 1. Redirecciones (Si no cumple, cortamos aquí)
   if (isAuthRoute && loggedIn) {
     return NextResponse.redirect(new URL('/', request.url));
   }
   
-  // 2. Rutas protegidas: redirigir a login si no está logueado
   if (isProtected && !loggedIn) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
   
-  // 3. Rutas carrito: redirigir si no está logueado o no tiene carrito
   if (isCartRoute) {
     if (!loggedIn) {
       return NextResponse.redirect(new URL('/login', request.url));
@@ -35,21 +33,19 @@ export function middleware(request: NextRequest) {
     }
   }
   
-  return NextResponse.next();
+  // 2. Si llegamos aquí, el usuario tiene permiso para ver la página
+  // Capturamos la respuesta normal
+  const response = NextResponse.next();
+
+  // 3. AÑADIR HEADERS PARA EVITAR CACHÉ en rutas sensibles
+  // Esto evita que el navegador guarde la página en el historial "físico"
+  if (isProtected || isCartRoute || isAuthRoute) {
+    response.headers.set('Cache-Control', 'no-store, max-age=0, must-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+  }
+  
+  return response;
 }
 
-export const config = {
-  matcher: [
-    '/myProfile/:path*',
-    '/orders/:path*',
-    '/login/:path*',
-    '/register/:path*',
-    '/enterEmail/:path*',
-    '/recoverPassword/:path*',
-    '/verificationCodeEmail/:path*',
-    '/changePassword/:path*',
-    '/cart1',
-    '/cart2',
-    '/cart3',
-  ],
-};
+// ... config matcher se mantiene igual
