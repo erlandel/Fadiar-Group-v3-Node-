@@ -73,7 +73,7 @@ export default function VerificationCodeEmail() {
 
       localStorage.removeItem("verificationEmail");
 
-      // 2. Setear cookie persistente para middleware
+      // 2. Setear cookie persistente para el proxy
       setAuthCookie();
       
       router.push("/");

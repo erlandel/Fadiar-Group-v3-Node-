@@ -50,7 +50,7 @@ export default function UserDropdown() {
           SuccesMessage("Sesión cerrada con éxito");
           clearAuth();
           clearCart();
-          // Limpieza inmediata de cookies (para que middleware redirija)
+          // Limpieza inmediata de cookies (para que el proxy redirija)
           clearAuthCookie();
           clearCartCookie();
 

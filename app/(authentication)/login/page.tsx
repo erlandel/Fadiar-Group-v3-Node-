@@ -66,7 +66,7 @@ export default function Login() {
         refresh_token: userInfo.refresh_token,
       });
 
-      // 2. Setear cookie persistente para middleware
+      // 2. Setear cookie persistente para el proxy
       setAuthCookie();
 
       router.push("/");

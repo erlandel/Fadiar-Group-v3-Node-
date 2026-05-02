@@ -5,7 +5,7 @@ const PROTECTED_ROUTES = ['/myProfile', '/orders'];
 const AUTH_ROUTES = ['/login', '/register', '/enterEmail', '/recoverPassword', '/verificationCodeEmail', '/changePassword'];
 const CART_ROUTES = ['/cart1', '/cart2', '/cart3'];
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
   const loggedIn = request.cookies.get('logged_in')?.value === 'true';
