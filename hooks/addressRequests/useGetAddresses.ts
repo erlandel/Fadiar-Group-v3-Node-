@@ -21,8 +21,15 @@ export const useGetAddresses = () => {
       body: JSON.stringify({ id_user: auth.user.id }),
     });
 
+    console.log("Response status:", response.status);
+
+    if(response.status === 204) {
+      return [];
+    }
+
     if (!response.ok) {
-      throw new Error("Error al obtener las direcciones");
+      
+      // throw new Error("Error al obtener las direcciones");
     }
 
     const data = await response.json();
