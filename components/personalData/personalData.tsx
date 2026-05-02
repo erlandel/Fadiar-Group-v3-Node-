@@ -287,6 +287,16 @@ export default function PersonalData() {
         </div>
 
         <form onSubmit={handleUpdatePassword} className="mt-10">
+          <input
+            type="text"
+            name="username"
+            autoComplete="username"
+            value={formData.email}
+            readOnly
+            className="sr-only"
+            tabIndex={-1}
+            aria-hidden="true"
+          />
           <div className="flex justify-between items-center w-full">
             <div>
               <h5 className="text-primary font-bold text-xl">Contraseña</h5>
