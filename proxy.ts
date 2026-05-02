@@ -24,10 +24,8 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
   
-  if (isCartRoute) {
-    if (!hasCart) {
+  if (isCartRoute && !hasCart) {
       return NextResponse.redirect(new URL('/', request.url));
-    }
   }
   
   // 2. Si llegamos aquí, el usuario tiene permiso para ver la página
