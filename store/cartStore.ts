@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { setCartCookie, clearCartCookie } from "@/utils/cookies";
 
 const CART_SYNC_CHANNEL = "cart-sync";
 
@@ -111,6 +112,13 @@ const syncCartState = (nextState: CartSyncState) => {
     items: nextState.items,
     rawCart: nextState.rawCart,
   });
+
+  // Actualizar cookies basándose en el nuevo estado
+  if (nextState.items.length > 0) {
+    setCartCookie();
+  } else {
+    clearCartCookie();
+  }
 };
 
 export const initializeCartSync = () => {
@@ -150,25 +158,29 @@ const cartStore = create<CartStore>()((set, get) => ({
             (existing) => existing.productId === item.productId
           );
 
+          let nextState;
           if (existingIndex === -1) {
-            const nextState = {
+            nextState = {
               items: [...state.items, { ...item, quantity }],
               rawCart: state.rawCart,
             };
-            broadcastCartState(nextState);
-            return nextState;
+          } else {
+            const updatedItems = [...state.items];
+            updatedItems[existingIndex] = {
+              ...updatedItems[existingIndex],
+              quantity: updatedItems[existingIndex].quantity + quantity,
+            };
+            nextState = {
+              items: updatedItems,
+              rawCart: state.rawCart,
+            };
           }
 
-          const updatedItems = [...state.items];
-          updatedItems[existingIndex] = {
-            ...updatedItems[existingIndex],
-            quantity: updatedItems[existingIndex].quantity + quantity,
-          };
-          const nextState = {
-            items: updatedItems,
-            rawCart: state.rawCart,
-          };
           broadcastCartState(nextState);
+          // Actualizar cookies
+          if (nextState.items.length > 0) {
+            setCartCookie();
+          }
           return nextState;
         });
       },
@@ -188,6 +200,10 @@ const cartStore = create<CartStore>()((set, get) => ({
             rawCart: state.rawCart,
           };
           broadcastCartState(nextState);
+          // Actualizar cookies
+          if (nextState.items.length > 0) {
+            setCartCookie();
+          }
           return nextState;
         });
       },
@@ -199,6 +215,12 @@ const cartStore = create<CartStore>()((set, get) => ({
             rawCart: state.rawCart,
           };
           broadcastCartState(nextState);
+          // Actualizar cookies
+          if (nextState.items.length > 0) {
+            setCartCookie();
+          } else {
+            clearCartCookie();
+          }
           return nextState;
         }),
 
@@ -206,6 +228,12 @@ const cartStore = create<CartStore>()((set, get) => ({
         set((state) => {
           const nextState = { items, rawCart: state.rawCart };
           broadcastCartState(nextState);
+          // Actualizar cookies
+          if (items.length > 0) {
+            setCartCookie();
+          } else {
+            clearCartCookie();
+          }
           return nextState;
         }),
 
@@ -220,6 +248,7 @@ const cartStore = create<CartStore>()((set, get) => ({
         set(() => {
           const nextState = { items: [], rawCart: [] };
           broadcastCartState(nextState);
+          clearCartCookie();
           return nextState;
         }),
 
