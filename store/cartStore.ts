@@ -1,7 +1,5 @@
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
 
-const CART_STORAGE_NAME = "cart-storage";
 const CART_SYNC_CHANNEL = "cart-sync";
 
 export type CartItem = {
@@ -40,12 +38,6 @@ export type CartState = {
 
 type CartStore = CartState;
 
-type PersistedCartStore = {
-  state?: {
-    items?: CartItem[];
-  };
-  version?: number;
-};
 
 type CartSyncState = {
   items: CartItem[];
@@ -61,8 +53,7 @@ type CartSyncMessage = {
 let cartChannel: BroadcastChannel | null = null;
 let cartSyncInitialized = false;
 
-const canUseBrowserAPIs = () =>
-  typeof window !== "undefined" && typeof localStorage !== "undefined";
+const canUseBrowserAPIs = () => typeof window !== "undefined";
 
 const getCartChannel = () => {
   if (typeof window === "undefined" || typeof BroadcastChannel === "undefined") {
@@ -109,19 +100,6 @@ const broadcastCartState = (payload: CartSyncState) => {
   channel.postMessage(message);
 };
 
-const parsePersistedCart = (value: string | null): CartSyncState => {
-  if (!value) return { items: [], rawCart: [] };
-
-  try {
-    const parsed = JSON.parse(value) as PersistedCartStore;
-    return {
-      items: parsed.state?.items ?? [],
-      rawCart: [],
-    };
-  } catch {
-    return { items: [], rawCart: [] };
-  }
-};
 
 const syncCartState = (nextState: CartSyncState) => {
   const currentState = getCartState();
@@ -152,30 +130,15 @@ export const initializeCartSync = () => {
     handleSync(event.data.payload);
   };
 
-  const handleStorage = (event: StorageEvent) => {
-    if (
-      event.storageArea !== localStorage ||
-      event.key !== CART_STORAGE_NAME
-    ) {
-      return;
-    }
-
-    handleSync(parsePersistedCart(event.newValue));
-  };
-
   channel?.addEventListener("message", handleBroadcastMessage);
-  window.addEventListener("storage", handleStorage);
 
   return () => {
     channel?.removeEventListener("message", handleBroadcastMessage);
-    window.removeEventListener("storage", handleStorage);
     cartSyncInitialized = false;
   };
 };
 
-const cartStore = create<CartStore>()(
-  persist(
-    (set, get) => ({
+const cartStore = create<CartStore>()((set, get) => ({
       items: [],
       rawCart: [],
       
@@ -275,20 +238,7 @@ const cartStore = create<CartStore>()(
           return total + (price * item.quantity);
         }, 0);
       },
-    }),
-    {
-      name: CART_STORAGE_NAME,
-      storage: createJSONStorage(() =>
-        typeof window !== "undefined"
-          ? localStorage
-          : (undefined as unknown as Storage)
-      ),
-      version: 1,
-      partialize: (state) => ({
-        items: state.items,
-      }),
-    }
-  )
+    })
 );
 
 export default cartStore;
