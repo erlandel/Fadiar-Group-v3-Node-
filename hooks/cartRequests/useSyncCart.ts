@@ -6,6 +6,7 @@ import MatterCart1Store from "@/store/matterCart1Store";
 import { refreshToken } from "@/utils/refreshToken";
 import { get_cart_productsUrl } from "@/urlApi/urlApi";
 import WarningMenssage from "@/messages/warningMenssage";
+import { clearCartCookie, setCartCookie } from "@/utils/cookies";
 
 export const syncCartStandalone = async (): Promise<boolean> => {
   const { auth, setAuth } = useAuthStore.getState();
@@ -88,11 +89,11 @@ export const syncCartStandalone = async (): Promise<boolean> => {
 
       useCartStore.getState().setItems(mappedItems);
 
-      // NUEVO: Setear cookie si hay items
+      // NUEVO: Setear cookie persistente si hay items
       if (mappedItems.length > 0) {
-        document.cookie = "has_cart=true; path=/;";
+        setCartCookie();
       } else {
-        document.cookie = "has_cart=; path=/;";
+        clearCartCookie();
       }
 
       // Sincronizar stores de cart3

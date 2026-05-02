@@ -9,6 +9,7 @@ import { useMutation } from "@tanstack/react-query";
 import MessageErrorAuth from "@/components/messageErrorAuth/messageErrorAuth";
 import { verifyCodeEmailUrl } from "@/urlApi/urlApi";
 import useAuthStore from "@/store/authStore";
+import { setAuthCookie } from "@/utils/cookies";
 
 
 export default function VerificationCodeEmail() {
@@ -72,8 +73,8 @@ export default function VerificationCodeEmail() {
 
       localStorage.removeItem("verificationEmail");
 
-      // 2. Setear cookie para middleware (NUEVO)
-      document.cookie = "logged_in=true; path=/";
+      // 2. Setear cookie persistente para middleware
+      setAuthCookie();
       
       router.push("/");
     },

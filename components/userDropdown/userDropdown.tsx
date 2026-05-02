@@ -16,6 +16,7 @@ import { refreshToken } from "@/utils/refreshToken";
 import SuccesMessage from "@/messages/succesMessage";
 import { logoutUrl } from "@/urlApi/urlApi";
 import { onClickOutside } from "@/utils/clickOutside";
+import { clearAuthCookie, clearCartCookie } from "@/utils/cookies";
 
 export default function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -50,8 +51,8 @@ export default function UserDropdown() {
           clearAuth();
           clearCart();
           // Limpieza inmediata de cookies (para que middleware redirija)
-          document.cookie = "logged_in=; path=/;";
-          document.cookie = "has_cart=; path=/;";
+          clearAuthCookie();
+          clearCartCookie();
 
           if (typeof window !== "undefined") {
             localStorage.removeItem("auth-storage");
@@ -64,8 +65,8 @@ export default function UserDropdown() {
           clearAuth();
           clearCart();
           localStorage.removeItem("auth-storage");
-          document.cookie = "logged_in=; path=/;";
-          document.cookie = "has_cart=; path=/;";
+          clearAuthCookie();
+          clearCartCookie();
           router.push("/");
         }
       } catch (error) {
@@ -73,12 +74,16 @@ export default function UserDropdown() {
         // En caso de error de red, también limpiamos localmente
         clearAuth();
         clearCart();
+        clearAuthCookie();
+        clearCartCookie();
         localStorage.removeItem("auth-storage");
         router.push("/");
       }
     } else {
       clearAuth();
       clearCart();
+      clearAuthCookie();
+      clearCartCookie();
       if (typeof window !== "undefined") {
         localStorage.removeItem("auth-storage");
         router.push("/");

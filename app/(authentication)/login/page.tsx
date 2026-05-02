@@ -10,6 +10,7 @@ import MessageErrorAuth from "@/components/messageErrorAuth/messageErrorAuth";
 import { useMutation } from "@tanstack/react-query";
 import { Loader, Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { loginUrl } from "@/urlApi/urlApi";
+import { setAuthCookie } from "@/utils/cookies";
 
 export default function Login() {
   const router = useRouter();
@@ -65,8 +66,8 @@ export default function Login() {
         refresh_token: userInfo.refresh_token,
       });
 
-      // 2. Setear cookie para middleware (NUEVO)
-      document.cookie = "logged_in=true; path=/";
+      // 2. Setear cookie persistente para middleware
+      setAuthCookie();
 
       router.push("/");
     },

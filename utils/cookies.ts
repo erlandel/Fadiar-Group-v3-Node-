@@ -1,18 +1,21 @@
 // Solo para uso en Client Components
+const COOKIE_FOREVER_EXPIRES = "Fri, 31 Dec 9999 23:59:59 GMT";
+const COOKIE_BASE_ATTRS = "path=/; SameSite=Lax";
+
 export const setAuthCookie = () => {
-  document.cookie = "logged_in=true; path=/;"; // 7 días
+  document.cookie = `logged_in=true; expires=${COOKIE_FOREVER_EXPIRES}; ${COOKIE_BASE_ATTRS}`;
 };
 
 export const clearAuthCookie = () => {
-  document.cookie = "logged_in=; path=/; ";
+  document.cookie = `logged_in=; expires=Thu, 01 Jan 1970 00:00:00 GMT; Max-Age=0; ${COOKIE_BASE_ATTRS}`;
 };
 
 export const setCartCookie = () => {
-  document.cookie = "has_cart=true; path=/; "; // 30 días
+  document.cookie = `has_cart=true; expires=${COOKIE_FOREVER_EXPIRES}; ${COOKIE_BASE_ATTRS}`;
 };
 
 export const clearCartCookie = () => {
-  document.cookie = "has_cart=; path=/; ";
+  document.cookie = `has_cart=; expires=Thu, 01 Jan 1970 00:00:00 GMT; Max-Age=0; ${COOKIE_BASE_ATTRS}`;
 };
 
 // Helper para middleware (server-side)
