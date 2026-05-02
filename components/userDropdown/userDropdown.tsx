@@ -25,6 +25,17 @@ export default function UserDropdown() {
   const { clearCart } = useCartStore();
   const router = useRouter();
 
+  const handleMenuNavigation = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    // En móvil/incógnito, el click del dropdown puede cerrar el menú
+    // antes de que Link complete la navegación.
+    e.preventDefault();
+    setIsOpen(false);
+    router.push(href);
+  };
+
   const handleLogout = async () => {
     setIsOpen(false);
     console.log("se ejecuta el cirre de ceccion ");
@@ -119,7 +130,7 @@ export default function UserDropdown() {
               <Link
                 href="/myProfile"
                 className="group flex items-center hover:bg-[#F5F7FA] transition-colors p-2"
-                onClick={() => setIsOpen(false)}
+                onClick={(e) => handleMenuNavigation(e, "/myProfile")}
               >
                 <UserCircle
                   className="text-[#777777] group-hover:text-[#022954] transition-colors"
@@ -134,7 +145,7 @@ export default function UserDropdown() {
               <Link
                 href="/orders"
                 className="group flex items-center hover:bg-[#F5F7FA] transition-colors p-2"
-                onClick={() => setIsOpen(false)}
+                onClick={(e) => handleMenuNavigation(e, "/orders")}
               >
                 <NextUilExit
                   className="text-[#777777] group-hover:text-[#022954] transition-colors"
@@ -166,7 +177,7 @@ export default function UserDropdown() {
               <Link
                 href="/login"
                 className="group flex items-center hover:bg-[#F5F7FA] transition-colors p-2"
-                onClick={() => setIsOpen(false)}
+                onClick={(e) => handleMenuNavigation(e, "/login")}
               >
                 <NextUilExit
                   className="text-[#777777] group-hover:text-[#022954] transition-colors"
@@ -181,7 +192,7 @@ export default function UserDropdown() {
               <Link
                 href="/register"
                 className="group flex items-center hover:bg-[#F5F7FA] transition-colors p-2"
-                onClick={() => setIsOpen(false)}
+                onClick={(e) => handleMenuNavigation(e, "/register")}
               >
                 <div className="group">
                   <MdiRegister />
