@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import useLoadingStore from "@/store/loadingStore";
 
@@ -9,6 +9,7 @@ export default function RouteChangeListener() {
   const searchParams = useSearchParams();
   const stopLoading = useLoadingStore((state) => state.stopLoading);
   const startLoading = useLoadingStore((state) => state.startLoading);
+  const loadingTimeoutRef = useRef<number | null>(null);
 
   // Detener el loader cuando la ruta cambia efectivamente
   useEffect(() => {
@@ -25,12 +26,20 @@ export default function RouteChangeListener() {
     let raf1: number, raf2: number;
     raf1 = requestAnimationFrame(() => {
       raf2 = requestAnimationFrame(() => {
+        if (loadingTimeoutRef.current !== null) {
+          window.clearTimeout(loadingTimeoutRef.current);
+          loadingTimeoutRef.current = null;
+        }
         stopLoading();
       });
     });
     return () => {
       cancelAnimationFrame(raf1);
       cancelAnimationFrame(raf2);
+      if (loadingTimeoutRef.current !== null) {
+        window.clearTimeout(loadingTimeoutRef.current);
+        loadingTimeoutRef.current = null;
+      }
     };
   }, [pathname, searchParams, stopLoading]);
 
@@ -66,16 +75,32 @@ export default function RouteChangeListener() {
 
         // Solo activar si la ruta o búsqueda es diferente a la actual
         if (targetPath !== currentPath || targetSearch !== currentSearch) {
-          // Si el click fue en un botón dentro del anchor o similar, 
+          // Si el click fue en un botón dentro del anchor o similar,
           // a veces el router de Next.js no navega si se hace stopPropagation
           startLoading();
+
+          if (loadingTimeoutRef.current !== null) {
+            window.clearTimeout(loadingTimeoutRef.current);
+          }
+
+          // Failsafe: cerrar loader automáticamente si tarda demasiado
+          loadingTimeoutRef.current = window.setTimeout(() => {
+            stopLoading();
+            loadingTimeoutRef.current = null;
+          }, 6000);
         }
       }
     };
 
     document.addEventListener("click", handleAnchorClick, { capture: true });
-    return () => document.removeEventListener("click", handleAnchorClick, { capture: true });
-  }, [startLoading]);
+    return () => {
+      document.removeEventListener("click", handleAnchorClick, { capture: true });
+      if (loadingTimeoutRef.current !== null) {
+        window.clearTimeout(loadingTimeoutRef.current);
+        loadingTimeoutRef.current = null;
+      }
+    };
+  }, [startLoading, stopLoading]);
 
   return null;
 }
