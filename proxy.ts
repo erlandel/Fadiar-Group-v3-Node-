@@ -25,9 +25,6 @@ export function proxy(request: NextRequest) {
   }
   
   if (isCartRoute) {
-    if (!loggedIn) {
-      return NextResponse.redirect(new URL('/login', request.url));
-    }
     if (!hasCart) {
       return NextResponse.redirect(new URL('/', request.url));
     }

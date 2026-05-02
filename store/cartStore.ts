@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { setCartCookie, clearCartCookie } from "@/utils/cookies";
+
 
 const CART_SYNC_CHANNEL = "cart-sync";
 
@@ -113,12 +113,7 @@ const syncCartState = (nextState: CartSyncState) => {
     rawCart: nextState.rawCart,
   });
 
-  // Actualizar cookies basándose en el nuevo estado
-  if (nextState.items.length > 0) {
-    setCartCookie();
-  } else {
-    clearCartCookie();
-  }
+
 };
 
 export const initializeCartSync = () => {
@@ -177,10 +172,6 @@ const cartStore = create<CartStore>()((set, get) => ({
           }
 
           broadcastCartState(nextState);
-          // Actualizar cookies
-          if (nextState.items.length > 0) {
-            setCartCookie();
-          }
           return nextState;
         });
       },
@@ -200,10 +191,7 @@ const cartStore = create<CartStore>()((set, get) => ({
             rawCart: state.rawCart,
           };
           broadcastCartState(nextState);
-          // Actualizar cookies
-          if (nextState.items.length > 0) {
-            setCartCookie();
-          }
+
           return nextState;
         });
       },
@@ -215,12 +203,7 @@ const cartStore = create<CartStore>()((set, get) => ({
             rawCart: state.rawCart,
           };
           broadcastCartState(nextState);
-          // Actualizar cookies
-          if (nextState.items.length > 0) {
-            setCartCookie();
-          } else {
-            clearCartCookie();
-          }
+         
           return nextState;
         }),
 
@@ -228,12 +211,7 @@ const cartStore = create<CartStore>()((set, get) => ({
         set((state) => {
           const nextState = { items, rawCart: state.rawCart };
           broadcastCartState(nextState);
-          // Actualizar cookies
-          if (items.length > 0) {
-            setCartCookie();
-          } else {
-            clearCartCookie();
-          }
+ 
           return nextState;
         }),
 
@@ -248,7 +226,7 @@ const cartStore = create<CartStore>()((set, get) => ({
         set(() => {
           const nextState = { items: [], rawCart: [] };
           broadcastCartState(nextState);
-          clearCartCookie();
+        
           return nextState;
         }),
 
