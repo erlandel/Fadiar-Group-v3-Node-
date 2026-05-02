@@ -71,6 +71,10 @@ export default function VerificationCodeEmail() {
       console.log("Datos de autenticación actualizados:", data);
 
       localStorage.removeItem("verificationEmail");
+
+      // 2. Setear cookie para middleware (NUEVO)
+      document.cookie = "logged_in=true; path=/";
+      
       router.push("/");
     },
     onError: (err: Error) => {

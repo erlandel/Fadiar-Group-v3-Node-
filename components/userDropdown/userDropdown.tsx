@@ -26,7 +26,7 @@ export default function UserDropdown() {
 
   const handleLogout = async () => {
     setIsOpen(false);
-    console.log("se ejecuta el cirre de ceccion ")
+    console.log("se ejecuta el cirre de ceccion ");
 
     if (auth?.access_token && auth?.refresh_token) {
       try {
@@ -45,19 +45,27 @@ export default function UserDropdown() {
         });
 
         if (response.ok) {
+          
           SuccesMessage("Sesión cerrada con éxito");
           clearAuth();
           clearCart();
+          // Limpieza inmediata de cookies (para que middleware redirija)
+          document.cookie = "logged_in=; path=/;";
+          document.cookie = "has_cart=; path=/;";
+
           if (typeof window !== "undefined") {
             localStorage.removeItem("auth-storage");
             router.push("/");
           }
+
         } else {
           console.error("Error al cerrar sesión en el servidor");
           // Incluso si falla en el servidor, limpiamos localmente por seguridad
           clearAuth();
           clearCart();
           localStorage.removeItem("auth-storage");
+          document.cookie = "logged_in=; path=/;";
+          document.cookie = "has_cart=; path=/;";
           router.push("/");
         }
       } catch (error) {
@@ -77,6 +85,7 @@ export default function UserDropdown() {
       }
     }
   };
+
   useEffect(() => {
     const cleanup = onClickOutside(dropdownRef, () => setIsOpen(false), {
       enabled: isOpen,

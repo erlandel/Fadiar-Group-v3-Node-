@@ -32,17 +32,13 @@ export default function Login() {
 
   const loginMutation = useMutation({
     mutationFn: async (payload: { email: string; password: string }) => {
-      const response = await fetch(
-       `${loginUrl}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        }
-      );
-   
+      const response = await fetch(`${loginUrl}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
@@ -53,29 +49,27 @@ export default function Login() {
         throw new Error(message);
       }
       const data = await response.json();
-    
+
       return data;
     },
- onSuccess: (data) => {
-  const userInfo =
-    data?.user_info ??
-    data?.data?.user_info ??
-    null;
+    onSuccess: (data) => {
+      const userInfo = data?.user_info ?? data?.data?.user_info ?? null;
 
-    
+      if (!userInfo) return;
 
-  if (!userInfo) return;
+      setAuth({
+        person: userInfo.person,
+        user: userInfo.user,
+        type: userInfo.type,
+        access_token: userInfo.access_token,
+        refresh_token: userInfo.refresh_token,
+      });
 
-  setAuth({
-    person: userInfo.person,
-    user: userInfo.user,
-    type: userInfo.type,
-    access_token: userInfo.access_token,
-    refresh_token: userInfo.refresh_token,
-  });
+      // 2. Setear cookie para middleware (NUEVO)
+      document.cookie = "logged_in=true; path=/";
 
-  router.push("/");
-},
+      router.push("/");
+    },
     onError: (error: Error) => {
       setShowErrors(true);
       if (error.message === "Su cuenta no ha sido verificada") {
@@ -84,7 +78,8 @@ export default function Login() {
         return;
       }
       setErrorBannerMessage(
-        error.message || "Usuario no encontrado. Verifica tu correo electrónico."
+        error.message ||
+          "Usuario no encontrado. Verifica tu correo electrónico.",
       );
     },
   });
@@ -153,7 +148,9 @@ export default function Login() {
                   autoComplete="email"
                   value={formData.email}
                   onChange={handleChange("email")}
-                  hasError={showErrors ? (!!errors.email && !editedFields.email) : false}
+                  hasError={
+                    showErrors ? !!errors.email && !editedFields.email : false
+                  }
                   hideErrorMessage
                 />
               </div>
@@ -168,7 +165,11 @@ export default function Login() {
                   autoComplete="current-password"
                   value={formData.password}
                   onChange={handleChange("password")}
-                  hasError={showErrors ? (!!errors.password && !editedFields.password) : false}
+                  hasError={
+                    showErrors
+                      ? !!errors.password && !editedFields.password
+                      : false
+                  }
                   hideErrorMessage
                   endIcon={showPassword ? EyeOff : Eye}
                   endIconClassName="h-5 w-5"

@@ -88,6 +88,13 @@ export const syncCartStandalone = async (): Promise<boolean> => {
 
       useCartStore.getState().setItems(mappedItems);
 
+      // NUEVO: Setear cookie si hay items
+      if (mappedItems.length > 0) {
+        document.cookie = "has_cart=true; path=/;";
+      } else {
+        document.cookie = "has_cart=; path=/;";
+      }
+
       // Sincronizar stores de cart3
       const currentStores = MatterCart1Store.getState().formData.stores;
       if (currentStores && currentStores.length > 0) {
@@ -97,14 +104,16 @@ export const syncCartStandalone = async (): Promise<boolean> => {
             products: store.products
               .filter((p: any) =>
                 mappedItems.some(
-                  (item) => String(item.productId) === String(p.productId)
-                )
+                  (item) => String(item.productId) === String(p.productId),
+                ),
               )
               .map((p: any) => {
                 const updated = mappedItems.find(
-                  (item) => String(item.productId) === String(p.productId)
+                  (item) => String(item.productId) === String(p.productId),
                 );
-                return updated ? { ...p, expiryTimestamp: updated.expiryTimestamp } : p;
+                return updated
+                  ? { ...p, expiryTimestamp: updated.expiryTimestamp }
+                  : p;
               }),
           }))
           .filter((store) => store.products.length > 0);
@@ -115,7 +124,10 @@ export const syncCartStandalone = async (): Promise<boolean> => {
       return true;
     } else {
       const errorData = await response.json().catch(() => ({}));
-      console.error("[syncCartStandalone] Error al obtener carrito:", errorData);
+      console.error(
+        "[syncCartStandalone] Error al obtener carrito:",
+        errorData,
+      );
       return false;
     }
   } catch (error) {
@@ -183,10 +195,12 @@ export const useSyncCart = (autoSync: boolean = false) => {
 
       timerRef.current = setTimeout(async () => {
         const expiredItem = items.find(
-          (item) => item.expiryTimestamp && item.expiryTimestamp <= Date.now()
+          (item) => item.expiryTimestamp && item.expiryTimestamp <= Date.now(),
         );
 
-        console.log("Un producto ha expirado. Sincronizando carrito automáticamente...");
+        console.log(
+          "Un producto ha expirado. Sincronizando carrito automáticamente...",
+        );
         scheduledExpiryRef.current = null;
 
         // Primero sincronizamos el carrito (remueve items expirados del store)
@@ -195,11 +209,11 @@ export const useSyncCart = (autoSync: boolean = false) => {
         // Luego mostramos warning y redirigimos
         if (expiredItem) {
           WarningMenssage(
-            `El producto "${expiredItem.title}" ha expirado y fue removido del carrito`
+            `El producto "${expiredItem.title}" ha expirado y fue removido del carrito`,
           );
           const cartPaths = ["/cart1", "/cart2", "/cart3"];
           const shouldRedirect = cartPaths.some((path) =>
-            pathname?.includes(path)
+            pathname?.includes(path),
           );
           if (shouldRedirect && useCartStore.getState().items.length === 0) {
             router.push("/");
