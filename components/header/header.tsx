@@ -53,17 +53,17 @@ export default function Header() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Link
-            href="/cart1"
-            className={`relative ${mounted && totalItems === 0 ? "pointer-events-none" : "cursor-pointer"}`}
-          >
-            <TablerShoppingCart className="cursor-pointer" />
-            {mounted && totalItems > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                {totalItems > 99 ? "99+" : totalItems}
-              </span>
-            )}
-          </Link>
+    <Link
+  href="/cart1"
+  className={`relative ${mounted && totalItems > 0 ? "cursor-pointer" : "pointer-events-none"}`}
+>
+  <TablerShoppingCart className="cursor-pointer" />
+  {mounted && totalItems > 0 && (
+    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+      {totalItems > 99 ? "99+" : totalItems}
+    </span>
+  )}
+</Link>
 
           <UserDropdown />
 
