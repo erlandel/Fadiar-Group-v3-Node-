@@ -39,7 +39,7 @@ export default function SectionMoreproducts() {
           Entra y consulta
         </span> */}
           <h3 className="text-primary text-2xl font-bold">
-           Elige tu solución ideal !!!
+           Elige tu solución ideal
           </h3>
       </div>
 
