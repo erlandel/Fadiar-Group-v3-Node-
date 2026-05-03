@@ -79,6 +79,7 @@ export default function BannerPot() {
           <div className="grid h-full items-end">
             {images.map((src, i) => (
               <img
+                loading="lazy"
                 key={src}
                 src={src}
                 alt="ollas y calderos"
