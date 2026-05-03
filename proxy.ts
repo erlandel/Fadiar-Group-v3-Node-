@@ -54,8 +54,8 @@ export const config = {
     '/recoverPassword',
     '/verificationCodeEmail',
     '/changePassword',
-    '/cart1/:path*',
-    '/cart2/:path*',
-    '/cart3/:path*',
+    '/cart1',
+    '/cart2',
+    '/cart3',
   ],
 };
