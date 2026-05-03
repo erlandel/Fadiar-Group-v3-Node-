@@ -106,9 +106,9 @@ export default function UserDropdown() {
         aria-label="User menu"
       >
         {auth?.access_token ? (
-          <HugeiconsUserAi className="mt-1 " />
+          <HugeiconsUserAi className="mt-1.5" />
         ) : (
-          <TablerUserCircle className="mt-1 " />
+          <TablerUserCircle className="mt-1.5 " />
         )}
       </button>
 
