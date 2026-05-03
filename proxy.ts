@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 const PROTECTED_ROUTES = ['/myProfile', '/orders'];
 const AUTH_ROUTES = ['/login', '/register', '/enterEmail', '/recoverPassword', '/verificationCodeEmail', '/changePassword'];
-const CART_ROUTES = ['/cart2', '/cart3'];
+const CART_ROUTES = ['/cart1', '/cart2', '/cart3'];
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -44,3 +44,18 @@ export function proxy(request: NextRequest) {
 }
 
 // ... config matcher se mantiene igual
+export const config = {
+  matcher: [
+    '/myProfile/:path*',
+    '/orders/:path*',
+    '/login',
+    '/register',
+    '/enterEmail',
+    '/recoverPassword',
+    '/verificationCodeEmail',
+    '/changePassword',
+    '/cart1/:path*',
+    '/cart2/:path*',
+    '/cart3/:path*',
+  ],
+};
