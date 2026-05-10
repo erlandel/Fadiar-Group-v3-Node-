@@ -57,7 +57,7 @@ export default function BannerPotProducts() {
           />
         </div>
 
-        <div className="z-10  mt-8 row-start-1 col-start-1 flex flex-col md:flex-row items-center justify-between 2xl:justify-center  gap-5 mx-4 xl:ml-10 2xl:mx-10">
+        <div className="z-10  mt-8 row-start-1 col-start-1 flex flex-col md:flex-row items-center justify-between   gap-5 mx-4 xl:ml-10 2xl:mx-10">
           <div id="lorem" className=" text-white md:mb-30 w-1/2 ">
             <h1 className="text-2xl sm:text-[28px] md:text-2xl  xl:text-3xl 2xl:text-[32px] font-bold  animate__animated  animate__lightSpeedInLeft">
               <samp className="text-[#D69F04] block  ">
@@ -74,8 +74,7 @@ export default function BannerPotProducts() {
 
           <div className="grid h-full items-end">
             {images.map((src, i) => (
-              <img
-              loading="lazy"
+              <img             
                 key={src}
                 src={src}
                 alt="ollas y calderos"

@@ -15,7 +15,7 @@ const isTokenExpired = (token: string): boolean => {
         .join("")
     );
     const payload = JSON.parse(jsonPayload);
-    
+    // console.log("Payload exp:", payload.exp);
     // Agregar margen de 30 segundos para evitar edge cases
     return payload.exp * 1000 < Date.now() + 30000;
   } catch {

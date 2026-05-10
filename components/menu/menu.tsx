@@ -128,16 +128,21 @@ export default function Menu() {
         <div className="p-6 ">
           {/* Logo y botón cerrar */}
           <div className="flex justify-between items-center mb-8">
-                <Link href="/">
-            <Image 
-            src="/images/logo.svg" 
-            alt="Logo"
-             width={0} 
-             height={0} 
-             className="h-10 w-30"
-             />
-              </Link>
-
+            <Link
+              href="/"
+              onClick={() => {
+                setIsOpen(false);
+                // if (!checkActive("/")) startLoading();
+              }}
+            >
+              <Image
+                src="/images/logo.svg"
+                alt="Logo"
+                width={0}
+                height={0}
+                className="h-10 w-30"
+              />
+            </Link>
             <button
               onClick={() => setIsOpen(false)}
               className="text-gray-600 hover:text-gray-900"

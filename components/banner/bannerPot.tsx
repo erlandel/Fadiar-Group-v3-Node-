@@ -58,7 +58,7 @@ export default function BannerPot() {
           />
         </div>
 
-        <div className="z-10  mt-8 row-start-1 col-start-1 flex flex-col md:flex-row items-center justify-between 2xl:justify-center gap-5 mx-4 lg:mx-10 2xl:mx-20 text-justify sm:text-left ">
+        <div className="z-10  mt-8 row-start-1 col-start-1 flex flex-col md:flex-row items-center justify-between  gap-5 mx-4 lg:mx-10 2xl:mx-20 text-justify sm:text-left ">
           <div
             id="lorem"
             className=" text-white md:mb-30  mx-1.5 sm:mx-0 md:w-1/2  "
@@ -78,8 +78,7 @@ export default function BannerPot() {
 
           <div className="grid h-full items-end">
             {images.map((src, i) => (
-              <img
-                loading="lazy"
+              <img                
                 key={src}
                 src={src}
                 alt="ollas y calderos"
