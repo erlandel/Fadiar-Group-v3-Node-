@@ -69,3 +69,20 @@ export const useInventory = <T = InventoryData>(select?: (data: InventoryData) =
     select,
   });
 };
+
+
+
+// const STALE_TIME = 5 * 60 * 1000;
+
+// return useQuery<InventoryData, Error, T>({
+//     queryKey: ["inventory", provinceId],
+//     queryFn: async () => {
+//       // ... tu código existente
+//     },
+//     staleTime: STALE_TIME,
+//     gcTime: 60 * 60 * 1000,
+//     refetchOnMount: true,
+//     refetchOnWindowFocus: true,
+//     refetchInterval: STALE_TIME,
+//     refetchIntervalInBackground: false,
+// });

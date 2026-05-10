@@ -17,6 +17,7 @@ const useLocation = (config?: { useGlobalStore?: boolean }) => {
     municipality,
     municipalityId,
     setLocation,
+    setProvincesVersion,
   } = useProductsByLocationStore();
 
   const [selectedProvince, setSelectedProvince] = useState(
@@ -43,12 +44,19 @@ const useLocation = (config?: { useGlobalStore?: boolean }) => {
       const json = await res.json();
       console.log("respuesta municipios", json);
 
-      // Si la respuesta viene envuelta en un objeto 'data'
+      //provincias
+
       const provinceData = Array.isArray(json) ? json : json.data;
- 
+      const version = json.version || null;
+
       if (!Array.isArray(provinceData)) {
         throw new Error("Error al cargar las provincias");
       }
+
+      if (useGlobalStore && version) {
+        setProvincesVersion(version);
+      }
+
       return provinceData as ProvinceData[];
     },
     staleTime: Infinity,

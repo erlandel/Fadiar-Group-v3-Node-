@@ -11,6 +11,7 @@ import { BestSelling } from "@/sections/sectionsProducts/bestSelling";
 import useCartStore from "@/store/cartStore";
 import StoreSelector from "@/components/storeSelector/storeSelector";
 import ListByStore from "@/components/listByStore/listByStore";
+import { useSyncCart } from "@/hooks/cartRequests/useSyncCart";
 
 export default function Cart1() {
   const items = useCartStore((state) => state.items);
@@ -19,9 +20,11 @@ export default function Cart1() {
   const [selectedStoreId, setSelectedStoreId] = useState<string | number>(
     "all",
   );
+  const { syncCart } = useSyncCart();
 
   useEffect(() => {
     setIsClient(true);
+    syncCart();
   }, []);
 
   // Items del carrito (sin filtrar por domicilio)

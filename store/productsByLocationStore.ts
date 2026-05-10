@@ -12,11 +12,13 @@ interface ProductsByLocationState {
   currencys: any;
   globalProducts: any[];
   lastFetchedMunicipalityId: string | null;
+  provincesVersion: string | null;
   setLocation: (province: string, provinceId: string | null, municipality: string, municipalityId: string | null) => void;
   clearLocation: () => void;
   setIsOpen: (isOpen: boolean) => void;
   setProductsData: (data: { products: any[]; tiendas: any[]; currencys: any; municipalityId: string | null }) => void;
   setGlobalProducts: (products: any[]) => void;
+  setProvincesVersion: (version: string | null) => void;
 }
 
 export const useProductsByLocationStore = create<ProductsByLocationState>()(
@@ -32,6 +34,7 @@ export const useProductsByLocationStore = create<ProductsByLocationState>()(
       currencys: null,
       globalProducts: [],
       lastFetchedMunicipalityId: null,
+      provincesVersion: null,
 
       setLocation: (province, provinceId, municipality, municipalityId) =>
         set(() => ({
@@ -52,6 +55,7 @@ export const useProductsByLocationStore = create<ProductsByLocationState>()(
           currencys: null,
           globalProducts: [],
           lastFetchedMunicipalityId: null,
+          provincesVersion: null,
         })),
 
       setIsOpen: (isOpen) => set({ isOpen }),
@@ -65,6 +69,8 @@ export const useProductsByLocationStore = create<ProductsByLocationState>()(
         }),
 
       setGlobalProducts: (globalProducts) => set({ globalProducts }),
+
+      setProvincesVersion: (provincesVersion) => set({ provincesVersion }),
     }),
     {
       name: "products-by-location-storage",
@@ -78,6 +84,7 @@ export const useProductsByLocationStore = create<ProductsByLocationState>()(
         provinceId: state.provinceId,
         municipality: state.municipality,
         municipalityId: state.municipalityId,
+        provincesVersion: state.provincesVersion,
       }),
     }
   )
