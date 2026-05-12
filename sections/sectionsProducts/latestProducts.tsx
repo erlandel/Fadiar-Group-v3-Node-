@@ -5,6 +5,7 @@ import { useLatestProducts } from "@/hooks/productRequests/useLatestProducts";
 import { useMemo } from "react";
 import CardProduct from "@/components/ui/cardProduct";
 import CardCarousel from "@/components/ui/cardCarousel";
+import { NoProductsFound } from "@/components/NoProductsFound/noProductsFound";
 
 type SectionMasRecientesProps = {
   products?: Product[];
@@ -14,13 +15,19 @@ export const LatestProducts = ({
   products: productsProp,
 }: SectionMasRecientesProps) => {
   // Usar el hook de caché
-  const { data: latestProductsData = [] } = useLatestProducts(10);
+  const {
+    data: latestProductsData = [],
+    isLoading,
+    isFetching,
+  } = useLatestProducts(10);
 
   // Usar productos del estado de caché si no vienen como prop
   const productsToUse =
     productsProp && productsProp.length > 0 ? productsProp : latestProductsData;
 
   const lastSixProducts = useMemo(() => [...productsToUse], [productsToUse]);
+  const loading =
+    !(productsProp && productsProp.length > 0) && (isLoading || isFetching);
 
   return (
     <>
@@ -38,7 +45,15 @@ export const LatestProducts = ({
         </div>
 
         <div className="w-full">
-          {lastSixProducts.length > 0 ? (
+          {loading ? (
+            <div className="flex gap-4 overflow-hidden">
+              {Array.from({ length: 10 }).map((_, index) => (
+                <div key={index} className="shrink-0">
+                  <CardSkeleton position={"vertical"} />
+                </div>
+              ))}
+            </div>
+          ) : lastSixProducts.length > 0 ? (
             <CardCarousel
              direction="right"
               items={lastSixProducts}
@@ -61,13 +76,7 @@ export const LatestProducts = ({
               gap={1}
             />
           ) : (
-            <div className="flex gap-4 overflow-hidden">
-              {Array.from({ length: 10 }).map((_, index) => (
-                <div key={index} className="shrink-0">
-                  <CardSkeleton position={"vertical"} />
-                </div>
-              ))}
-            </div>
+            <NoProductsFound />
           )}
         </div>
         

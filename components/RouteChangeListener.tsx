@@ -87,7 +87,7 @@ export default function RouteChangeListener() {
           loadingTimeoutRef.current = window.setTimeout(() => {
             stopLoading();
             loadingTimeoutRef.current = null;
-          }, 6000);
+          }, 10000);
         }
       }
     };

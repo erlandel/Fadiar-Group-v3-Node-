@@ -91,10 +91,8 @@ export const syncCartStandalone = async (): Promise<boolean> => {
 
       // NUEVO: Setear cookie persistente si hay items
       if (mappedItems.length > 0) {
-        console.log("[syncCartStandalone] Seteando cookie has_cart=true");
         setCartCookie();
       } else {
-        console.log("[syncCartStandalone] Limpiando cookie has_cart");
         clearCartCookie();
       }
 
@@ -201,9 +199,6 @@ export const useSyncCart = (autoSync: boolean = false) => {
           (item) => item.expiryTimestamp && item.expiryTimestamp <= Date.now(),
         );
 
-        console.log(
-          "Un producto ha expirado. Sincronizando carrito automáticamente...",
-        );
         scheduledExpiryRef.current = null;
 
         // Primero sincronizamos el carrito (remueve items expirados del store)

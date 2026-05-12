@@ -6,6 +6,7 @@ import { useInventory } from "@/hooks/productRequests/useInventory";
 import { useMemo } from "react";
 import CardProduct from "@/components/ui/cardProduct";
 import CardCarousel from "@/components/ui/cardCarousel";
+import { NoProductsFound } from "@/components/NoProductsFound/noProductsFound";
 
 type BestSellingProps = {
   products?: Product[];
@@ -66,7 +67,15 @@ export const BestSelling = ({ products: productsProp }: BestSellingProps) => {
         </div>
 
         <div className="w-full">
-          {!isLoading && filteredAndSortedProducts.length > 0 ? (
+          {isLoading ? (
+            <div className="flex gap-4 overflow-hidden">
+              {Array.from({ length: 10 }).map((_, index) => (
+                <div key={index} className="shrink-0">
+                  <CardSkeleton position={"vertical"} />
+                </div>
+              ))}
+            </div>
+          ) : filteredAndSortedProducts.length > 0 ? (
             <CardCarousel
              direction="right"
               items={filteredAndSortedProducts}
@@ -90,13 +99,7 @@ export const BestSelling = ({ products: productsProp }: BestSellingProps) => {
               gap={1}
             />
           ) : (
-            <div className="flex gap-4 overflow-hidden">
-              {Array.from({ length: 10 }).map((_, index) => (
-                <div key={index} className="shrink-0">
-                  <CardSkeleton position={"vertical"} />
-                </div>
-              ))}
-            </div>
+            <NoProductsFound />
           )}
         </div>
 

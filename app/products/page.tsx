@@ -201,6 +201,13 @@ export default function Products() {
   const filteredProducts = useMemo(() => {
     let filtered = [...allProducts];
 
+    const getEffectiveProductPrice = (product: any) => {
+      const temporal = parseFloat(product?.temporal_price);
+      if (Number.isFinite(temporal) && temporal > 0) return temporal;
+      const regular = parseFloat(product?.price);
+      return Number.isFinite(regular) ? regular : 0;
+    };
+
     // Filtro por tienda seleccionada
     if (selectedStoreId) {
       filtered = filtered.filter(
@@ -245,7 +252,7 @@ export default function Products() {
     // Filtro por precio
     if (price[0] !== priceRange.min || price[1] !== priceRange.max) {
       filtered = filtered.filter((product) => {
-        const productPrice = parseFloat(product.price) || 0;
+        const productPrice = getEffectiveProductPrice(product);
         return productPrice >= price[0] && productPrice <= price[1];
       });
     }
@@ -291,12 +298,14 @@ export default function Products() {
     return Math.ceil(filteredProducts.length / itemsPerPage);
   }, [filteredProducts.length, itemsPerPage]);
 
-  // Calcular productos paginados desde productos filtrados
-  const paginatedProducts = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return filteredProducts.slice(startIndex, endIndex);
-  }, [filteredProducts, currentPage, itemsPerPage]);
+// Calcular productos paginados desde productos filtrados
+const paginatedProducts = useMemo(() => {
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  const orderedProducts = [...filteredProducts].reverse(); // últimos primero
+  return orderedProducts.slice(startIndex, endIndex);
+}, [filteredProducts, currentPage, itemsPerPage]);
 
   // Efecto para scroll al último producto visto
   useEffect(() => {

@@ -206,7 +206,7 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
       {/* Content - Collapsible */}
       <div className={`transition-all duration-300 ease-in-out custom-scrollbar ${
         isOpen
-          ? 'max-h-[450px] opacity-100 overflow-y-auto'
+          ? `max-h-[450px] opacity-100 ${type === "range" ? "overflow-visible" : "overflow-y-auto"}`
           : 'max-h-0 opacity-0 overflow-hidden'
       }`}>
         {/* CHECKBOX */}
@@ -272,9 +272,9 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
 
         {/* RANGE */}
         {type === "range" && (
-          <div className="mt-4 overflow-x-hidden">
+          <div className="mt-4 overflow-visible">
             {/* Dual Range Slider */}
-            <div className="relative mb-8 pt-8 px-4 pb-2 pr-8">
+            <div className="relative z-10 mb-8 pt-8 px-4 pb-2 pr-8">
               {/* Track container */}
               <div
                 ref={trackRef}
