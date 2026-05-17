@@ -4,7 +4,6 @@ import Serchbar from "@/components/searchBar/searchBar";
 import UserDropdown from "@/components/userDropdown/userDropdown";
 import { AkarIconsLocation, TablerShoppingCart } from "@/icons/icons";
 import Image from "next/image";
-import "@fontsource/just-me-again-down-here";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";

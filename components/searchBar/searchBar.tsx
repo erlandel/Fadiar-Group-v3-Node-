@@ -135,6 +135,16 @@ export default function Searchbar() {
   }, [isOpen]);
 
   /**
+   * Navegar a la página de resultados de búsqueda
+   */
+  const handleSearchSubmit = () => {
+    if (query.trim()) {
+      router.push(`/search?q=${encodeURIComponent(query.trim())}`);
+      setIsOpen(false);
+    }
+  };
+
+  /**
    * Búsqueda optimizada con Jaro-Winkler 
    */
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -231,11 +241,15 @@ export default function Searchbar() {
           placeholder="Buscar producto"
           value={query}
           onChange={handleSearch}
+          onKeyDown={(e) => e.key === 'Enter' && handleSearchSubmit()}
           onFocus={() => query && setIsOpen(true)}
           className="w-full outline-none text-base text-black placeholder-gray-400 bg-transparent pl-4 pr-12 pb-1 border-b border-[#022954]"
         />
 
-        <button className="absolute right-3 top-0 cursor-pointer ">
+        <button
+          onClick={handleSearchSubmit}
+          className="absolute right-3 top-0 cursor-pointer "
+        >
           <IcSharpSearch className="w-7 h-7 text-gray-800" />
         </button>
 
