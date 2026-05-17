@@ -2,6 +2,7 @@ export const server_url = 'https://app.fadiar.com:444/prueba/api';
 
 // export const server_url = 'https://59z4798b-5001.use.devtunnels.ms';
 
+
 export const loginUrl = `${server_url}/login`;
 
 export const  recover_credentials_by_emailUrl = `${server_url}/recuperar_credenciales_por_correo`;
