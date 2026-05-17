@@ -2,7 +2,7 @@
 
 import { IcSharpSearch } from "@/icons/icons";
 import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { onClickOutside } from "@/utils/clickOutside";
 import { useUpcomingProducts } from "@/hooks/productRequests/useUpcomingProducts";
 import { Product } from "@/types/product";
@@ -122,7 +122,19 @@ export default function Searchbar() {
   const startLoading = useLoadingStore((state) => state.startLoading);
   const stopLoading = useLoadingStore((state) => state.stopLoading);
   const router = useRouter();
+  const pathname = usePathname();
   const searchRef = useRef<HTMLDivElement>(null);
+
+  /**
+   * Limpiar input de búsqueda al salir de la página de resultados
+   */
+  useEffect(() => {
+    if (!pathname.startsWith("/search")) {
+      setQuery("");
+      setSearchResults([]);
+      setIsOpen(false);
+    }
+  }, [pathname]);
 
   /**
    * Cerrar dropdown al hacer click fuera
