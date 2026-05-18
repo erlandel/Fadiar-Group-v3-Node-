@@ -15,6 +15,7 @@ import { useInventory } from "@/hooks/productRequests/useInventory";
 import { useBestSelling } from "@/hooks/productRequests/useBestSelling";
 import { useUpcomingProducts } from "@/hooks/productRequests/useUpcomingProducts";
 import { Loader } from "lucide-react";
+import ImageViewer from "@/components/ui/imageViewer/ImageViewer";
 import { server_url } from "@/urlApi/urlApi";
 import useLoadingStore from "@/store/loadingStore";
 import WarningMenssage from "@/messages/warningMenssage";
@@ -33,6 +34,8 @@ export default function ProductClient({ id }: ProductClientProps) {
 
   const [qty, setQty] = useState(1);
   const [selectedImage, setSelectedImage] = useState<string>("");
+  const [isImageViewerOpen, setIsImageViewerOpen] = useState(false);
+  const [viewerIndex, setViewerIndex] = useState(0);
   const { addToCart, loading } = useAddToCart();
   const cartItems = useCartStore((state) => state.items);
   const [isInCart, setIsInCart] = useState(false);
@@ -209,7 +212,12 @@ export default function ProductClient({ id }: ProductClientProps) {
                     width={613}
                     height={682}
                     unoptimized
-                    className="w-auto h-full rounded-xl object-contain"
+                    className="w-auto h-full rounded-xl object-contain cursor-pointer"
+                    onClick={() => {
+                      const idx = images.findIndex((img) => img === (selectedImage || product.img));
+                      setViewerIndex(idx >= 0 ? idx : 0);
+                      setIsImageViewerOpen(true);
+                    }}
                   />
                 </div>
 
@@ -217,7 +225,10 @@ export default function ProductClient({ id }: ProductClientProps) {
                   {images.map((img, i) => (
                     <div
                       key={i}
-                      onClick={() => setSelectedImage(img)}
+                      onClick={() => {
+                        setSelectedImage(img);
+                        setViewerIndex(i);
+                      }}
                       className={`w-20 h-20 rounded-md border-2 cursor-pointer overflow-hidden transition-all ${
                         selectedImage === img
                           ? "border-blue-500"
@@ -369,6 +380,15 @@ export default function ProductClient({ id }: ProductClientProps) {
       <div className="xl:hidden">
         <BestSelling />
       </div>
+
+      {product && (
+        <ImageViewer
+          images={images}
+          initialIndex={viewerIndex}
+          isOpen={isImageViewerOpen}
+          onClose={() => setIsImageViewerOpen(false)}
+        />
+      )}
     </main>
   );
 }
