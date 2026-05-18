@@ -1,5 +1,4 @@
 "use client";
-import "@fontsource/just-me-again-down-here";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
@@ -38,7 +37,7 @@ export default function BannerPot() {
 
   return (
     <>
-      <div className="grid h-[400px] sm:h-[360px] md:h-[320px] lg:h-[300px] xl:h-[360px]  2xl:h-[400px]  ">
+      <div className="grid h-[400px] sm:h-[360px] md:h-80 lg:h-[300px] xl:h-[360px]  2xl:h-[400px]  ">
         {/* <img
           src="/images/Banner.webp"
           alt="banner azul"

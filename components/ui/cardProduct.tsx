@@ -134,7 +134,7 @@ export default function CardProduct({
           </div>
 
           {/* Info del producto */}
-          <div className="flex flex-col gap-2 shrink-0">
+          <div className="flex flex-col gap-2 flex-1 overflow-hidden min-h-0">
             <div>
               <p className="text-sm text-[#777777] line-clamp-1">{category}</p>
             </div>
@@ -147,7 +147,7 @@ export default function CardProduct({
           </div>
 
           {/* Precio y acciones */}
-          <div className="flex flex-1 flex-col justify-end gap-3">
+        <div className="flex flex-col shrink-0 gap-3">
             <p className="text-md text-[#022954] line-clamp-1">{brand}</p>
             {warrantyNumber > 0 ? (
               <p className="text-sm font-medium text-[#D69F04]">
@@ -181,7 +181,7 @@ export default function CardProduct({
             )}
 
             <div
-              className="mt-2 flex items-center justify-between xl:gap-3  font-bold"
+              className=" flex items-center justify-between xl:gap-3  font-bold"
               onClick={handleButtonClick}
             >
               <div className="flex items-center rounded-xl border border-gray-200 bg-white cursor-default shrink-0">
