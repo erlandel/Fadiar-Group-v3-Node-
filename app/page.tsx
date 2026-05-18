@@ -1,5 +1,3 @@
-
-import "@fontsource/just-me-again-down-here";
 import BannerPot from "@/components/banner/bannerPot";
 import SectionMoreproducts from "@/sections/home/sectionMoreproducts";
 import HomeClient from "./HomeClient";

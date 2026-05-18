@@ -24,9 +24,9 @@ export default function Faq() {
               Preguntas Frecuentes
             </span>
           </p>
-          <h1 className="text-3xl text-primary font-bold mb-8">
+          {/* <h1 className="text-3xl text-primary font-bold mb-8">
             Preguntas Frecuentes
-          </h1>
+          </h1> */}
         </div>
 
         <section>

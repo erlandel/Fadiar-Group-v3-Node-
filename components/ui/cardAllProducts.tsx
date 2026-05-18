@@ -104,7 +104,7 @@ export default function CardAllProducts({
       <div
         id={`product-${productId}`}
         onClick={productId ? handleCardClick : undefined}
-        className={`bg-white w-full h-120 min-w-42 max-w-55 xl:w-55  p-2 sm:p-3 border border-gray-200 rounded-2xl shadow-sm flex flex-col justify-between 
+        className={`bg-white w-full h-115 sm:h-120 min-w-42 max-w-55 xl:w-55  p-2 sm:p-3 border border-gray-200 rounded-2xl shadow-sm flex flex-col justify-between 
           gap-3 ${productId ? "cursor-pointer transition-shadow hover:shadow-md" : ""  } `}
       >
         {/* Imagen */}
@@ -134,15 +134,15 @@ export default function CardAllProducts({
           </div>
 
           <div className="space-y-1">
-            <h3 className="text-lg font-semibold text-[#022954] truncate">
+            <h3 className="text-lg font-semibold text-[#022954] line-clamp-2">
               {title}
             </h3>
-            <p className="text-md text-[#022954] line-clamp-1">{brand}</p>
           </div>
         </div>
 
         {/* Precio y acciones */}
         <div className="flex flex-1 flex-col justify-end gap-3 min-h-0">
+            <p className="text-md text-[#022954] line-clamp-1">{brand}</p>
           {warrantyNumber > 0 ? (
             <p className="text-sm font-medium text-[#D69F04]">
               Garantía de {warrantyNumber / 30} meses
@@ -175,7 +175,7 @@ export default function CardAllProducts({
           )}
 
           <div
-            className="mt-auto flex items-center justify-between xl:gap-3 pt-2 font-bold"
+            className="mt-1 flex items-center justify-between xl:gap-3  font-bold"
             onClick={handleButtonClick}
           >
             <div className="flex items-center rounded-xl border border-gray-200 bg-white cursor-default shrink-0">

@@ -62,9 +62,11 @@ export default function CardProductPreSale({
           <h3 className="text-lg font-semibold text-[#022954] truncate">
             {title}
           </h3>
-          <p className="text-md text-[#022954] line-clamp-1">{brand}</p>
         </div>
+          <p className="text-md text-[#022954] line-clamp-1">{brand}</p>
       </div>
+
+
 
       {/* Precio y acciones */}
       <div className="flex flex-1 flex-col justify-end gap-3 min-h-0">
@@ -99,6 +101,8 @@ export default function CardProductPreSale({
           </div>
         )}
       </div>
+
+
     </div>
   );
 }
